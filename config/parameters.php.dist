@@ -1,0 +1,7 @@
+<?php
+
+return [
+    'connection.dsn'      => 'mysql:dbname=framework;host=127.0.0.1;port=3306',
+    'connection.user'     => 'root',
+    'connection.password' => 'root',
+];

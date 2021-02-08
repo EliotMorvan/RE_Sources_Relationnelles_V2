@@ -1,0 +1,21 @@
+{
+    "name": "ekyna/pdo",
+    "authors": [
+        {
+            "name": "Etienne Dauvergne",
+            "email": "contact@ekyna.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "ext-pdo": "*",
+        "php-di/php-di": "^6.3",
+        "phroute/phroute": "^2.1",
+        "twig/twig": "^3.3",
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    }
+}
