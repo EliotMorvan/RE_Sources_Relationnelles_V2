@@ -7,11 +7,6 @@ use Http\Response;
 use Router\Router;
 use Twig\Environment;
 
-/**
- * Class AbstractController
- * @package Controller
- * @author  Étienne Dauvergne <contact@ekyna.com>
- */
 class AbstractController
 {
     /**

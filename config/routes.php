@@ -1,8 +1,7 @@
 <?php
 
-use Controller\Admin\DashboardController;
-use Controller\Admin\SecurityController;
-use Controller\Admin\UserController;
+use Controller\Admin;
+use Controller\Api;
 use Controller\AppController;
 use Http\RedirectResponse;
 use Phroute\Phroute\RouteCollector;
@@ -16,30 +15,6 @@ use Security\Security;
  * @see https://github.com/mrjgreen/phroute
  */
 return function (RouteCollector $router, ContainerInterface $container) {
-    // --------- Partie publique ---------
-
-    // Page d'accueil
-    $router->any(
-        // Url, Name
-        ['/', 'app_index'],
-        // Class, Method
-        [AppController::class, 'index']
-    );
-
-    // --------- Administration ---------
-
-    // Connexion
-    $router->any(
-        ['/admin/login', 'admin_login'],
-        [SecurityController::class, 'login']
-    );
-
-    // Déconnexion
-    $router->get(
-        ['/admin/logout', 'admin_logout'],
-        [SecurityController::class, 'logout']
-    );
-
     // Filtre de sécurisation
     $router->filter('secured', function () use ($container) {
         // Si l'utilisateur est pas authentifié
@@ -55,10 +30,62 @@ return function (RouteCollector $router, ContainerInterface $container) {
         return new RedirectResponse($path, 403);
     });
 
+    // --------- Partie publique ---------
+
+    // Page d'accueil
+    $router->get(
+        // Url, Name
+        ['/', 'app_index'],
+        // Class, Method
+        [AppController::class, 'index']
+    );
+
+    // --------- API ---------
+
+    // Gestion des utilisateurs
+    $router->group(
+        [
+            'prefix' => '/api/user',
+            // TODO 'before' => 'secured',
+        ],
+        function ($router) {
+            $router->get(
+                ['/', 'api_user_index'],
+                [Api\UserController::class, 'index']
+            );
+
+            $router->post(
+                ['/', 'api_user_create'],
+                [Api\UserController::class, 'create']
+            );
+
+            $router->get(
+                ['/{id:\d+}', 'api_user_read'],
+                [Api\UserController::class, 'read']
+            );
+
+            // ...
+        }
+    );
+
+    // --------- Administration ---------
+
+    // Connexion
+    $router->any(
+        ['/admin/login', 'admin_login'],
+        [Admin\SecurityController::class, 'login']
+    );
+
+    // Déconnexion
+    $router->get(
+        ['/admin/logout', 'admin_logout'],
+        [Admin\SecurityController::class, 'logout']
+    );
+
     // Tableau de bord
     $router->get(
         ['/admin', 'admin_dashboard'],
-        [DashboardController::class, 'index'],
+        [Admin\DashboardController::class, 'index'],
         ['before' => 'secured']
     );
 
@@ -66,32 +93,32 @@ return function (RouteCollector $router, ContainerInterface $container) {
     $router->group(
         [
             'prefix' => '/admin/user',
-            'before' => 'secured'
+            'before' => 'secured',
         ],
         function ($router) {
             $router->get(
                 ['/', 'admin_user_index'],
-                [UserController::class, 'index']
+                [Admin\UserController::class, 'index']
             );
 
             $router->any(
                 ['/create', 'admin_user_create'],
-                [UserController::class, 'create']
+                [Admin\UserController::class, 'create']
             );
 
             $router->get(
                 ['/read/{id:\d+}', 'admin_user_read'],
-                [UserController::class, 'read']
+                [Admin\UserController::class, 'read']
             );
 
             $router->any(
                 ['/update/{id:\d+}', 'admin_user_update'],
-                [UserController::class, 'update']
+                [Admin\UserController::class, 'update']
             );
 
             $router->any(
                 ['/delete/{id:\d+}', 'admin_user_delete'],
-                [UserController::class, 'delete']
+                [Admin\UserController::class, 'delete']
             );
         }
     );

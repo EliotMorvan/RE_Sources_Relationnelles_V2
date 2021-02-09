@@ -6,11 +6,6 @@ use Controller\AbstractController;
 use Http\Response;
 use Security\Security;
 
-/**
- * Class SecurityController
- * @package Controller
- * @author  Étienne Dauvergne <contact@ekyna.com>
- */
 class SecurityController extends AbstractController
 {
     /**

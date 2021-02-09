@@ -68,6 +68,11 @@ class Kernel
     {
         $builder = new ContainerBuilder();
 
+        // En production, on active la mise en cache du conteneur de services
+        if (!$this->debug) {
+            $builder->enableCompilation($this->projectDir . '/cache/container');
+        }
+
         // Configure les paramètres de base.
         $builder->addDefinitions([
             'debug'       => $this->debug,
@@ -78,7 +83,7 @@ class Kernel
         $path = $this->projectDir . '/config/parameters.php';
         if (!file_exists($path)) {
             throw new Exception(
-                "Please create the 'config/parameters.php' file, ".
+                "Please create the 'config/parameters.php' file, " .
                 "based on 'config/parameters.php.dist'."
             );
         }

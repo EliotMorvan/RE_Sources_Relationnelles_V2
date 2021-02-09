@@ -1,7 +1,12 @@
 <?php
 
+use Controller\Admin;
+use Controller\Api;
+use Controller\AppController;
+use Manager\UserManager;
 use Phroute\Phroute\RouteCollector;
 use Psr\Container\ContainerInterface;
+use Repository\UserRepository;
 use Router\Router;
 use Router\RouterExtension;
 use Router\RouterResolver;
@@ -10,6 +15,9 @@ use Security\Md5Encoder;
 use Security\Security;
 use Security\SecurityExtension;
 use Twig\Environment;
+use Validator\UserValidator;
+
+use function DI\autowire;
 
 /**
  * Configuration des services.
@@ -26,7 +34,7 @@ use Twig\Environment;
  */
 return [
     // Connection à la base de données
-    PDO::class              => function (ContainerInterface $container) {
+    PDO::class                       => function (ContainerInterface $container) {
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         ];
@@ -41,7 +49,7 @@ return [
 
     // Routeur
     /** @see https://github.com/mrjgreen/phroute */
-    Router::class           => function (ContainerInterface $container) {
+    Router::class                    => function (ContainerInterface $container) {
         // Charge le fichier de configuration des routes
         $collector = new RouteCollector();
         $routes = require $container->get('project_dir') . '/config/routes.php';
@@ -55,7 +63,7 @@ return [
 
     // Moteur de templates
     /** @see https://twig.symfony.com/doc/3.x/templates.html */
-    Environment::class      => function (ContainerInterface $container) {
+    Environment::class               => function (ContainerInterface $container) {
         // Permet de charger les fichiers .twig du dossier templates/.
         $loader = new Twig\Loader\FilesystemLoader(
             $container->get('project_dir') . '/templates'
@@ -64,6 +72,7 @@ return [
         // Le moteur de template
         $environment = new Environment($loader, [
             'cache' => $container->get('project_dir') . '/cache/twig',
+            // Si FALSE (production), le cache ne sera plus réactualisé automatiquement
             'debug' => $container->get('debug'),
         ]);
 
@@ -89,7 +98,18 @@ return [
     },
 
     // Encodeur de mot de passe
-    EncoderInterface::class => function () {
+    EncoderInterface::class          => function () {
         return new Md5Encoder();
     },
+
+    // For performances
+    /** @see https://php-di.org/doc/performances.html */
+    Admin\DashboardController::class => autowire(),
+    Admin\SecurityController::class  => autowire(),
+    Admin\UserController::class      => autowire(),
+    Api\UserController::class        => autowire(),
+    AppController::class             => autowire(),
+    UserManager::class               => autowire(),
+    UserRepository::class            => autowire(),
+    UserValidator::class             => autowire(),
 ];
