@@ -3,6 +3,7 @@
 use Controller\Admin;
 use Controller\Api;
 use Controller\AppController;
+use Controller\TestController;
 use Http\RedirectResponse;
 use Phroute\Phroute\RouteCollector;
 use Psr\Container\ContainerInterface;
@@ -38,6 +39,26 @@ return function (RouteCollector $router, ContainerInterface $container) {
         ['/', 'app_index'],
         // Class, Method
         [AppController::class, 'index']
+    );
+
+    $router->get(
+        ['/test', 'test_index'], 
+        [TestController::class, 'index']
+    );
+    
+    $router->get(
+        ['/test/foo', 'test_foo'], 
+        [TestController::class, 'foo']
+    );
+
+    $router->get(
+        ['/test/user/{id}', 'test_user'],
+        [TestController::class, 'user']
+    );
+
+    $router->get(
+        ['/test/userList', 'test_user_list'],
+        [TestController::class, 'userList']
     );
 
     // --------- API ---------

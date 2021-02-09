@@ -16,8 +16,8 @@ class Request
 
     public static function createFromGlobals(): Request
     {
-        $method = $_SERVER['REQUEST_METHOD'];
-        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $method = $_SERVER['REQUEST_METHOD']; //'GET'
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); // '/admin'
 
         return new self($method, $path);
     }

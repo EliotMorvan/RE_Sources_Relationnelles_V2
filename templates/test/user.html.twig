@@ -1,0 +1,14 @@
+{# templates/test/user.html.twig #}
+
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        {% if my_user is not null %}
+        <p>{{my_user.email}}</p>
+        {% else %}
+        <p>Utilisateur introuvable</p>
+        {% endif %}
+    </div>
+{% endblock %}
+

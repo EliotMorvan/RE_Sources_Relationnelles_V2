@@ -42,6 +42,11 @@ class Kernel
     {
         session_start();
 
+        if ($this->debug) {
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
+        }
+
         $this->build();
 
         $router = $this->container->get(Router::class);
