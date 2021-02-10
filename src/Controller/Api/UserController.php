@@ -60,6 +60,7 @@ class UserController
         if (isset($_POST['password'])) {
             $user->setPlainPassword($_POST['password']);
         }
+        $user->setDroit(0);
 
         $errors = $this->validator->validate($user);
 

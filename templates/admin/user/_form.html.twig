@@ -24,3 +24,16 @@
         {% endif %}
     </div>
 </div>
+<div class="row mb-3">
+    <label for="inputDroit" class="col-sm-2 col-form-label">Droits</label>
+    <div class="col-sm-10">
+        <select type="ratio" name="password" id="inputPassword"
+               class="form-control{% if errors.password %} is-invalid{% endif %}"
+               value="{{ user.droit }}">
+            <option value=0> Citoyen</option>
+            <option value=1 <?php if({{ user.droit }} == 1){echo("selected");}?>Modérateur</option>
+            <option value=2 <?php if({{ user.droit }} == 2){echo("selected");}?>Administrateur</option>
+            <option value=3 <?php if({{ user.droit }} == 3){echo("selected");}?>Super Administrateur</option>
+        </select>
+    </div>
+</div>

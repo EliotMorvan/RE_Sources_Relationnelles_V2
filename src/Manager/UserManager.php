@@ -48,8 +48,8 @@ class UserManager
     {
         // Prépare une requête d'insertion d'un utilisateur
         $insert = $this->connection->prepare(
-            'INSERT INTO user(email, password) '.
-            'VALUES (:email, :password);'
+            'INSERT INTO user(email, password, droit) '.
+            'VALUES (:email, :password, :droit);'
         );
 
         // Encode le mot de passe de l'utilisateur
@@ -60,6 +60,7 @@ class UserManager
         $insert->execute([
             'email'    => $user->getEmail(),
             'password' => $user->getPassword(),
+            'droit'    => 0,
         ]);
 
         // Mettre à jour l'identifiant de l'utilisateur
@@ -95,6 +96,8 @@ class UserManager
             // Ajoute à la liste des champs à mettre à jour
             $couples[] = 'password=' . $this->connection->quote($encoded);
         }
+
+        $couple[] = 'droit=' . $this->connection->quote($user->getDroit());
 
         // Execute la requête de mise à jour
         $this->connection->query(

@@ -53,7 +53,8 @@ class UserController extends AbstractController
         if (isset($_POST['create_user'])) {
             $user
                 ->setEmail($_POST['email'])
-                ->setPlainPassword($_POST['password']);
+                ->setPlainPassword($_POST['password'])
+                ->setDroit(0);
 
             $errors = $this->validator->validate($user);
 
@@ -88,14 +89,15 @@ class UserController extends AbstractController
         if (isset($_POST['update_user'])) {
             $user
                 ->setEmail($_POST['email'])
-                ->setPlainPassword($_POST['password']);
+                ->setPlainPassword($_POST['password'])
+                ->setDroit(0);
 
             $errors = $this->validator->validate($user);
 
             if (empty($errors)) {
-                $this->manager->insert($user);
+                $this->manager->update($user);
 
-                return $this->redirectToRoute('admin_user_read', [$user->getId()]);
+                return $this->redirectToRoute('admin_user_index', [$user->getId()]);
             }
         }
 

@@ -35,7 +35,7 @@ class UserRepository
     {
         // Récupérer la liste des utilisateurs
         $select = $this->connection->query(
-            'SELECT id, email, password FROM user'
+            'SELECT id, email, password, droit FROM user'
         );
 
         // Liste d'utilisateurs à renvoyer
@@ -60,7 +60,7 @@ class UserRepository
     public function findOneById(int $id): ?User
     {
         $select = $this->connection->query(
-            'SELECT id, email, password '.
+            'SELECT id, email, password, droit '.
             'FROM user '.
             'WHERE id=' . $id . ' ' .
             'LIMIT 1'
@@ -85,11 +85,9 @@ class UserRepository
     public function findOneByEmail(string $email): ?User
     {
         $email = $this->connection->quote($email);
-        // À l'étage
-        // 'À l\'étage'
 
         $select = $this->connection->query(
-            'SELECT id, email, password ' .
+            'SELECT id, email, password, droit ' .
             'FROM user ' .
             'WHERE email=' . $email . ' ' .
             'LIMIT 1'
@@ -117,6 +115,7 @@ class UserRepository
         $user->setId($data['id']);
         $user->setEmail($data['email']);
         $user->setPassword($data['password']);
+        $user->setDroit($data['droit']);
 
         return $user;
     }

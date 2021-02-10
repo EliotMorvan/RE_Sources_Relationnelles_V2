@@ -35,6 +35,16 @@ class User {
      */
     private $plainPassword;
 
+    /**
+     * Droit de l'utilisateur.
+     * 0 - Utilisateur connecté
+     * 1 - Modérateur
+     * 2 - Administrateur
+     * 3 - Super-Amdinistrateur
+     * @var int
+     */
+    private $droit;
+
 
     public function getId()
     {
@@ -82,5 +92,44 @@ class User {
         $this->plainPassword = $plainPassword;
 
         return $this;
+    }
+
+    public function getDroit()
+    {
+        return $this->droit;
+    }
+
+    public function setDroit(int $droit)
+    {
+        $this->droit = $droit;
+
+        return $this;
+    }
+
+    public function isModerateur()
+    {
+        if ($this->droit === 1 || 2 || 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isAdministrateur()
+    {
+        if ($this->droit === 2 || 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isSuperAdministrateur()
+    {
+        if ($this->droit === 3) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
