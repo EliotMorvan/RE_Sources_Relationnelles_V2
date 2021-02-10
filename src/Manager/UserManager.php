@@ -96,8 +96,8 @@ class UserManager
             // Ajoute à la liste des champs à mettre à jour
             $couples[] = 'password=' . $this->connection->quote($encoded);
         }
-
-        $couple[] = 'droit=' . $this->connection->quote($user->getDroit());
+            //Ajout champ droit
+            $couples []=     'droit=' . $this->connection->quote($user->getDroit());
 
         // Execute la requête de mise à jour
         $this->connection->query(

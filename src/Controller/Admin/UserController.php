@@ -90,7 +90,7 @@ class UserController extends AbstractController
             $user
                 ->setEmail($_POST['email'])
                 ->setPlainPassword($_POST['password'])
-                ->setDroit(0);
+                ->setDroit($_POST['droit']);
 
             $errors = $this->validator->validate($user);
 
