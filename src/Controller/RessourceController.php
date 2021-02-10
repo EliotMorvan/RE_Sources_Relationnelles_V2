@@ -10,7 +10,7 @@ use Http\Response;
 use Twig\Environment;
 use Repository\RessourceRepository;
 
-class RessourceController
+class RessourceController extends AbstractController
 {
     /**
      * @var Environment
@@ -36,5 +36,22 @@ class RessourceController
         ]);
 
         return new Response($content);
+    }
+    public function createRessource(): Response
+    {
+        $ressource = new Ressource();
+           
+            //if (isset($_POST['create_ressource'])) {
+            //$ressource
+              //  ->setTitre($_POST['titre'])
+                //->setContenu($_POST['contenu'])
+                //->setIdCreateur($_POST['IdCreateur']);
+            
+               //$this->manager->insert($ressource);
+
+                //return $this->redirectToRoute('liste_ressources');
+           // }
+                
+        return $this->render('ressource/createRessource.html.twig');
     }
 }

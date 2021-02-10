@@ -1,0 +1,32 @@
+{# templates/ressource/creatRessource.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Ressource{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Créer une nouvelle ressource</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="{{ path('liste_ressources') }}" class="btn btn-sm btn-outline-secondary">
+                Retour à la liste
+            </a>
+        </div>
+    </div>
+
+    <form action="{{ path('creation_ressource') }}" method="post">
+        {% include 'ressource/_form.html.twig' %}
+        <div class="row mb-3">
+            <div class="col-sm-10 offset-sm-2">
+               <button type="submit" name="creation_ressource" class="btn btn-success">
+                   Enregistrer
+                </button>
+                <a href="{{ path('liste_ressources') }}" class="btn btn-light">
+                    Annuler
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

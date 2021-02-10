@@ -68,6 +68,13 @@ return function (RouteCollector $router, ContainerInterface $container) {
         [RessourceController::class, 'index']
     );
 
+    // Création de ressources
+    $router->get(
+        ['/createRessource', 'creation_ressource'],
+        [RessourceController::class, 'createRessource']
+    );
+
+
     // --------- API ---------
 
     // Gestion des utilisateurs
