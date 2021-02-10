@@ -4,6 +4,7 @@ use Controller\Admin;
 use Controller\Api;
 use Controller\AppController;
 use Controller\TestController;
+use Controller\RessourceController;
 use Http\RedirectResponse;
 use Phroute\Phroute\RouteCollector;
 use Psr\Container\ContainerInterface;
@@ -59,6 +60,12 @@ return function (RouteCollector $router, ContainerInterface $container) {
     $router->get(
         ['/test/userList', 'test_user_list'],
         [TestController::class, 'userList']
+    );
+
+    // Gestion des ressources
+    $router->get(
+        ['/ressources', 'liste_ressources'],
+        [RessourceController::class, 'index']
     );
 
     // --------- API ---------
@@ -143,4 +150,5 @@ return function (RouteCollector $router, ContainerInterface $container) {
             );
         }
     );
+
 };

@@ -1,0 +1,28 @@
+{# templates/ressource/index.html.twig #}
+
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Contenu</th>
+                    <th>Créateur</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ressource in ressources %}
+                <tr>
+                    <td>{{ ressource.id }}</td>
+                    <td>{{ ressource.titre }}</td>
+                    <td>{{ ressource.contenu }}</td>
+                    <td>{{ ressource.idCreateur }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
