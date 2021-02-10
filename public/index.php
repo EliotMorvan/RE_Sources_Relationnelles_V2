@@ -13,4 +13,4 @@ $request = Request::createFromGlobals();
 $response = $kernel->handleRequest($request);
 // Envoie la réponse au navigateur
 $response->send();
-//test
+
