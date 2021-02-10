@@ -61,7 +61,7 @@ class UserController extends AbstractController
             if (empty($errors)) {
                 $this->manager->insert($user);
 
-                return $this->redirectToRoute('admin_user_read', [$user->getId()]);
+                return $this->redirectToRoute('admin_user_index');
             }
         }
 
@@ -97,7 +97,7 @@ class UserController extends AbstractController
             if (empty($errors)) {
                 $this->manager->update($user);
 
-                return $this->redirectToRoute('admin_user_index', [$user->getId()]);
+                return $this->redirectToRoute('admin_user_index');
             }
         }
 

@@ -9,6 +9,7 @@ use Entity\Ressource;
 use Http\Response;
 use Twig\Environment;
 use Repository\RessourceRepository;
+use Manager\RessourceManager;
 
 class RessourceController
 {
@@ -18,14 +19,23 @@ class RessourceController
     private $twig;
 
     /**
+     * @var RessourceManager
+     */
+    private $manager;
+
+    /**
      * @var RessourceRepository
      */
     private $repository;
 
-    public function __construct(Environment $twig, RessourceRepository $repository)
+    public function __construct(
+        Environment $twig, 
+        RessourceRepository $repository,
+        RessourceManager $manager)
     {
         $this->twig = $twig;
         $this->repository = $repository;
+        $this->manager = $manager;
     }
 
     public function index(): Response
@@ -35,6 +45,23 @@ class RessourceController
             'ressources' => $ressources,
         ]);
 
+        return new Response($content);
+    }
+
+    public function createRessource(): Response
+    {
+        $ressource = new Ressource();
+
+        if (isset($_POST['create_ressource'])) {
+            $ressource
+                ->setTitre($_POST['titre'])
+                ->setContenu($_POST['contenu'])
+                ->setIdCreateur(13);
+
+                $this->manager->insert($ressource);
+        }
+
+        $content = $this->twig->render('ressource/create.html.twig');
         return new Response($content);
     }
 }

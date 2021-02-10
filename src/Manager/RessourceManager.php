@@ -38,4 +38,23 @@ class RessourceManager
         $this->connection = $connection;
         $this->encoder = $encoder;
     }
+
+    public function insert(Ressource $ressource): void
+    {
+        // Prépare une requête d'insertion d'une ressource
+        $insert = $this->connection->prepare(
+            'INSERT INTO ressource(titre, contenu, id_createur) '.
+            'VALUES (:titre, :contenu, :idCreateur);'
+        );
+
+        // Execute la requête d'insertion
+        $insert->execute([
+            'titre'         => $ressource->getTitre(),
+            'contenu'       => $ressource->getContenu(),
+            'idCreateur'    => $ressource->getIdCreateur(),
+        ]);
+
+        // Mettre à jour l'identifiant de l'utilisateur
+        $ressource->setId($this->connection->lastInsertId());
+    }
 }
