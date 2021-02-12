@@ -62,7 +62,7 @@ return function (RouteCollector $router, ContainerInterface $container) {
         [TestController::class, 'userList']
     );
 
-    // Gestion des ressources
+    // ---------- Gestion des ressources ----------
     $router->get(
         ['/ressources', 'liste_ressources'],
         [RessourceController::class, 'index']
@@ -71,6 +71,16 @@ return function (RouteCollector $router, ContainerInterface $container) {
     $router->any(
         ['ressources/creation', 'create_ressource'],
         [RessourceController::class, 'createRessource']
+    );
+
+    $router->any(
+        ['ressources/update/{id}', 'update_ressource'],
+        [RessourceController::class, 'updateRessource']
+    );
+
+    $router->any(
+        ['ressources/delete/{id}', 'delete_ressource'],
+        [RessourceController::class, 'delete']
     );
 
     // --------- API ---------

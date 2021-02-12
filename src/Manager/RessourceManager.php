@@ -57,4 +57,57 @@ class RessourceManager
         // Mettre à jour l'identifiant de la ressource
         $ressource->setId($this->connection->lastInsertId());
     }
+
+    /**
+     * Mets à jour une ressource dans la base de données.
+     *
+     * @param Ressource $ressource L'instance de la classe Ressource
+     *                   à modifier dans la base de données.
+     */
+    public function update(Ressource $ressource): void
+    {
+        // Si l'identifiant de l'utilisateur n'est pas un nombre entier positif
+        if (0 >= $ressource->getId()) {
+            // On ne peut pas mettre à jour cet utilisateur
+            throw new \Exception("Ressource introuvable");
+        }
+
+        // Les champs que l'on souhaite mettre à jour
+        // (à gauche, le nom de la colonne de la base de données)
+        $couples = [
+            'titre=' . $this->connection->quote($ressource->getTitre()),
+            'contenu=' . $this->connection->quote($ressource->getContenu()),
+        ];
+        
+        // Execute la requête de mise à jour
+        $this->connection->query(
+            'UPDATE ressource SET ' . implode(',', $couples) .
+            ' WHERE id=' . $ressource->getId() . ' LIMIT 1'
+        );
+    }
+
+    /**
+     * Supprime une ressource de la base de données.
+     *
+     * @param Ressource $ressource L'instance de la classe Ressource
+     *                  à supprimer de la base de données.
+     */
+    public function delete(Ressource $ressource): void
+    {
+        // Si l'identifiant de l'utilisateur n'est pas un nombre entier positif
+        if (0 >= $ressource->getId()) {
+            // On ne peut pas supprimer cet utilisateur
+            throw new \Exception("Ressource introuvable");
+        }
+
+        // Prépare la requête de suppression
+        $delete = $this->connection->prepare(
+            'DELETE FROM ressource WHERE id=:param_id LIMIT 1'
+        );
+
+        // Execute la requête de suppression
+        $delete->execute([
+            'param_id' => $ressource->getId(),
+        ]);
+    }
 }

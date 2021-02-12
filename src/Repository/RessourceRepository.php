@@ -59,6 +59,30 @@ class RessourceRepository
     }
 
     /**
+     * Renvoi la ressource possédant l'ID passé en paramètre.
+     *
+     * @return Ressource
+     */
+    public function findOneById(int $id): ?Ressource
+    {
+        // Récupérer la liste des ressources
+        $select = $this->connection->query(
+            'SELECT id, titre, contenu, id_createur FROM ressource ' .
+            'WHERE id=' . $id . ' ' .
+            'LIMIT 1'
+        );
+
+        $data = $select->fetch(PDO::FETCH_ASSOC);
+
+        if (false === $data) {
+            return null;
+        }
+
+        // Renvoi la liste des ressources
+        return $this->buildRessource($data);
+    }
+
+    /**
      * Builds the user from the given data.
      *
      * @param array $data

@@ -4,28 +4,41 @@
 
 {% block body %}
     <div class="container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Titre</th>
-                    <th>Contenu</th>
-                    <th>Créateur</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ressource in ressources %}
-                <tr>
-                    <td>{{ ressource.id }}</td>
-                    <td>{{ ressource.titre }}</td>
-                    <td>{{ ressource.contenu }}</td>
-                    <td>{{ ressource.createur.email }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% if get_user().droit is not null %}
-        <a href="{{ path('create_ressource')}}" class="btn btn-light">Créer ressource</a>
-        {% endif %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Titre</th>
+                        <th>Contenu</th>
+                        <th>Créateur</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ressource in ressources %}
+                    <tr>
+                        <td>{{ ressource.id }}</td>
+                        <td>{{ ressource.titre }}</td>
+                        <td> {{ ressource.contenu }}</td>
+                        <td>{{ ressource.createur.email }}</td>
+                        <td class="text-end min-width: 175px;">
+                            <a href="{{ path('update_ressource', [ressource.id]) }}"
+                            class="btn btn-xs btn-warning">
+                                Modifier
+                            </a>
+                            <a href="{{ path('delete_ressource', [ressource.id]) }}"
+                            class="btn btn-xs btn-danger">
+                                Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% if get_user().droit is not null %}
+            <a href="{{ path('create_ressource')}}" class="btn btn-light">Créer ressource</a>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
