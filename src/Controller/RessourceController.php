@@ -10,6 +10,7 @@ use Http\Response;
 use Twig\Environment;
 use Repository\RessourceRepository;
 use Manager\RessourceManager;
+use Security\Security;
 
 class RessourceController
 {
@@ -28,21 +29,30 @@ class RessourceController
      */
     private $repository;
 
+    /**
+     * @var Security
+     */
+    private $security;
+
     public function __construct(
         Environment $twig, 
         RessourceRepository $repository,
-        RessourceManager $manager)
+        RessourceManager $manager,
+        Security $security)
     {
         $this->twig = $twig;
         $this->repository = $repository;
         $this->manager = $manager;
+        $this->security = $security;
     }
 
     public function index(): Response
     {
+        $currentUSer = $this->security->getUser();
         $ressources = $this->repository->findAll();
         $content = $this->twig->render('ressource/index.html.twig', [
             'ressources' => $ressources,
+            'currentUser' => $currentUSer,
         ]);
 
         return new Response($content);
