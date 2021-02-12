@@ -40,7 +40,6 @@ class RessourceController
 
     public function index(): Response
     {
-        $currentUSer = $this->security->getUser();
         $ressources = $this->repository->findAll();
         $content = $this->twig->render('ressource/index.html.twig', [
             'ressources' => $ressources,

@@ -7,6 +7,7 @@
     </button>
     <div class="d-flex">
         <span class="btn btn-dark disabled">{{ get_user().email }}</span>
-        <a class="btn btn-dark" href="{{ path('admin_logout') }}">Sign out</a>
+        <a class="btn btn-dark" href="{{ path('app_index') }}">Accueil</a>
+        <a class="btn btn-dark" href="{{ path('admin_logout') }}">Déconnexion</a>
     </div>
 </header>

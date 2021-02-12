@@ -27,7 +27,7 @@ class SecurityController extends AbstractController
             } elseif (empty($password = $_POST['password'])) {
                 $error = "Veuillez saisir votre mot de passe.";
             } elseif ($this->security->login($email, $password)) {
-                return $this->redirectToRoute('admin_dashboard');
+                return $this->redirectToRoute('/');
             } else {
                 $error = $this->security->getError();
             }
