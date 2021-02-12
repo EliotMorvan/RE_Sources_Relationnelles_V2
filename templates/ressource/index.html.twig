@@ -24,7 +24,7 @@
                 {% endfor %}
             </tbody>
         </table>
-        {% if currentUser.droit is not null %}
+        {% if get_user().droit is not null %}
         <a href="{{ path('create_ressource')}}" class="btn btn-light">Créer ressource</a>
         {% endif %}
     </div>
