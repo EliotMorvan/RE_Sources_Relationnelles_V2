@@ -3,37 +3,37 @@
 namespace Entity;
 
 /**
- * Class User
+ * Class Ressource
  *
- * Entité utilisateur : Objet représentant
- * un utilisateur dans la base de donnée.
+ * Entité Ressource : Objet représentant
+ * une ressource dans la base de donnée.
  */
 class Ressource {
     /**
-     * L'identifiant de l'utilisateur
+     * L'identifiant de la ressource
      * @var int
      */
     private $id;
 
     /**
-     * Email de l'utilisateur
+     * Le titre de la ressource
      * @var string
      */
     private $titre;
 
     /**
-     * Mot de passe (crypté) de l'utilisateur
+     * Le contenu de la ressource
      * @var string
      */
     private $contenu;
 
     /**
-     * Mot de passe (en clair) de l'utilisateur.
-     * Utilisé dans les formulaires de création et de modification d'un utilisateur.
-     * Ne sera pas enregistré dans la base de données.
-     * @var int
+     * Le créateur de la ressource
+     * Stockage en base de son ID et récupération de l'entity User
+     * Lors de la construction de la ressource
+     * @var User
      */
-    private $idCreateur;
+    private $createur;
 
 
     public function getId()
@@ -72,14 +72,14 @@ class Ressource {
         return $this;
     }
 
-    public function getIdCreateur()
+    public function getCreateur()
     {
-        return $this->idCreateur;
+        return $this->createur;
     }
 
-    public function setIdCreateur(int $idCreateur)
+    public function setCreateur(User $createur)
     {
-        $this->idCreateur = $idCreateur;
+        $this->createur = $createur;
 
         return $this;
     }

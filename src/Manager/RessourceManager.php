@@ -51,10 +51,10 @@ class RessourceManager
         $insert->execute([
             'titre'         => $ressource->getTitre(),
             'contenu'       => $ressource->getContenu(),
-            'idCreateur'    => $ressource->getIdCreateur(),
+            'idCreateur'    => $ressource->getCreateur()->getId(),
         ]);
 
-        // Mettre à jour l'identifiant de l'utilisateur
+        // Mettre à jour l'identifiant de la ressource
         $ressource->setId($this->connection->lastInsertId());
     }
 }

@@ -51,12 +51,14 @@ class RessourceController
     public function createRessource(): Response
     {
         $ressource = new Ressource();
+        $createur = new User();
+        $createur->setId(13);
 
         if (isset($_POST['create_ressource'])) {
             $ressource
                 ->setTitre($_POST['titre'])
                 ->setContenu($_POST['contenu'])
-                ->setIdCreateur(13);
+                ->setCreateur($createur);
 
                 $this->manager->insert($ressource);
         }

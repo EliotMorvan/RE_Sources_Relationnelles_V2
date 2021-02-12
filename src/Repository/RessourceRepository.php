@@ -4,27 +4,34 @@ namespace Repository;
 
 use Entity\User;
 use Entity\Ressource;
+use Repository\UserRepository;
 use PDO;
 
 /**
- * Class UserRepository
+ * Class RessourceRepository
  *
- * Dépôt des utilisateurs : service (objet) responsable de LIRE
+ * Dépôt des ressources : service (objet) responsable de LIRE
  * dans la base de données (par opposition à la classe
- * UserManager qui est responsable d'ÉCRIRE).
+ * RessourceManager qui est responsable d'ÉCRIRE).
  */
 class RessourceRepository
 {
     /** PDO */
     private $connection;
 
+    /** 
+     * @var UserRespository 
+    */
+    private $userRespository;
+
     /**
      * Constructor.
      *
      * @param PDO $connection La connection à la base de données.
      */
-    public function __construct(PDO $connection) {
+    public function __construct(PDO $connection, UserRepository $userRespository) {
         $this->connection = $connection;
+        $this->userRespository = $userRespository;
     }
 
     /**
@@ -64,7 +71,10 @@ class RessourceRepository
         $ressource->setId($data['id']);
         $ressource->setTitre($data['titre']);
         $ressource->setContenu($data['contenu']);
-        $ressource->setIdCreateur($data['id_createur']);
+
+        // Récupération du créateur de la ressource
+        $createur = $this->userRespository->findOneById($data['id_createur']);
+        $ressource->setCreateur($createur);
 
         return $ressource;
     }
