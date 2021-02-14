@@ -27,12 +27,30 @@
 <div class="row mb-3">
     <label for="inputDroit" class="col-sm-2 col-form-label">Droits</label>
     <div class="col-sm-10">
-        <select type="ratio" name="droit" id="inputDroit"
-                value="{{ user.droit }}">
-            <option value=0 <?php if({{ user.droit }} == 0){echo("selected");}?>Citoyen</option>
-            <option value=1 <?php if({{ user.droit }} == 1){echo("selected");}?>Modérateur</option>
-            <option value=2 <?php if({{ user.droit }} == 2){echo("selected");}?>Administrateur</option>
-            <option value=3 <?php if({{ user.droit }} == 3){echo("selected");}?>Super Administrateur</option>
-        </select>
+        <select class="form-control" id="inputDroit" name="droit">
+            {% set selected = '' %}
+            {% if (user.droit) == 0 %}
+            {% set selected = 'selected' %}
+            {% endif %}
+            <option value=0 {{ selected }}>Citoyen</option>
+
+            {% set selected = '' %}
+            {% if (user.droit) == 1 %}
+            {% set selected = 'selected' %}
+            {% endif %}
+            <option value=1 {{ selected }}>Modérateur</option>
+
+            {% set selected = '' %}
+            {% if (user.droit) == 2 %}
+            {% set selected = 'selected' %}
+            {% endif %}
+            <option value=2 {{ selected }}>Administrateur</option>
+
+            {% set selected = '' %}
+            {% if (user.droit) == 3 %}
+            {% set selected = 'selected' %}
+            {% endif %}
+            <option value=3 {{ selected }}>Super Administrateur</option>
+</select>
     </div>
 </div>

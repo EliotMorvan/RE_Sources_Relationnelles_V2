@@ -71,6 +71,58 @@ class Security
     }
 
     /**
+     * Renvoi l'utilisateur connecté, ou la valeur nulle.
+     *
+     * @return bool|null
+     */
+    public function isConnected(): bool
+    {
+        // Authentifie l'utilisateur
+        $this->authenticate();
+
+        return $this->user->getDroit() >= 0;
+    }
+
+    /**
+     * Renvoi l'utilisateur connecté, ou la valeur nulle.
+     *
+     * @return bool|null
+     */
+    public function isModerateur(): bool
+    {
+        // Authentifie l'utilisateur
+        $this->authenticate();
+
+        return $this->user->getDroit() >= 1;
+    }
+
+    /**
+     * Renvoi l'utilisateur connecté, ou la valeur nulle.
+     *
+     * @return bool|null
+     */
+    public function isAdministrateur(): bool
+    {
+        // Authentifie l'utilisateur
+        $this->authenticate();
+
+        return $this->user->getDroit() >= 2;
+    }
+
+    /**
+     * Renvoi l'utilisateur connecté, ou la valeur nulle.
+     *
+     * @return bool|null
+     */
+    public function isSuperAdministrateur(): bool
+    {
+        // Authentifie l'utilisateur
+        $this->authenticate();
+
+        return $this->user->getDroit() >= 3;
+    }
+
+    /**
      * Renvoi l'erreur d'authentification, ou la valeur nulle.
      *
      * @return string|null

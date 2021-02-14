@@ -18,9 +18,9 @@ use Security\Security;
  */
 return function (RouteCollector $router, ContainerInterface $container) {
     // Filtre de sécurisation
-    $router->filter('secured', function () use ($container) {
+    $router->filter('citoyen', function () use ($container) {
         // Si l'utilisateur est pas authentifié
-        if ($container->get(Security::class)->getUser()) {
+        if ($container->get(Security::class)->isConnected()) {
             // On renvoi null pour exécuter le contrôleur
             return null;
         }
@@ -28,6 +28,48 @@ return function (RouteCollector $router, ContainerInterface $container) {
         // Redirige vers la page de login
         // 403 : Code HTTP pour "accès non autorisé" (Access Denied)
         $path = $container->get(Router::class)->generate('admin_login');
+
+        return new RedirectResponse($path, 403);
+    });
+
+    $router->filter('moderateur', function () use ($container) {
+        // Si l'utilisateur est pas authentifié
+        if ($container->get(Security::class)->isModerateur()) {
+            // On renvoi null pour exécuter le contrôleur
+            return null;
+        }
+
+        // Redirige vers la page de login
+        // 403 : Code HTTP pour "accès non autorisé" (Access Denied)
+        $path = $container->get(Router::class)->generate('app_index');
+
+        return new RedirectResponse($path, 403);
+    });
+
+    $router->filter('administrateur', function () use ($container) {
+        // Si l'utilisateur est pas authentifié
+        if ($container->get(Security::class)->isAdministrateur()) {
+            // On renvoi null pour exécuter le contrôleur
+            return null;
+        }
+
+        // Redirige vers la page de login
+        // 403 : Code HTTP pour "accès non autorisé" (Access Denied)
+        $path = $container->get(Router::class)->generate('app_index');
+
+        return new RedirectResponse($path, 403);
+    });
+
+    $router->filter('superAdministrateur', function () use ($container) {
+        // Si l'utilisateur est pas authentifié
+        if ($container->get(Security::class)->isSuperAdministrateur()) {
+            // On renvoi null pour exécuter le contrôleur
+            return null;
+        }
+
+        // Redirige vers la page de login
+        // 403 : Code HTTP pour "accès non autorisé" (Access Denied)
+        $path = $container->get(Router::class)->generate('app_index');
 
         return new RedirectResponse($path, 403);
     });
@@ -40,26 +82,6 @@ return function (RouteCollector $router, ContainerInterface $container) {
         ['/', 'app_index'],
         // Class, Method
         [AppController::class, 'index']
-    );
-
-    $router->get(
-        ['/test', 'test_index'], 
-        [TestController::class, 'index']
-    );
-    
-    $router->get(
-        ['/test/foo', 'test_foo'], 
-        [TestController::class, 'foo']
-    );
-
-    $router->get(
-        ['/test/user/{id}', 'test_user'],
-        [TestController::class, 'user']
-    );
-
-    $router->get(
-        ['/test/userList', 'test_user_list'],
-        [TestController::class, 'userList']
     );
 
     // ---------- Gestion des ressources ----------
@@ -94,7 +116,7 @@ return function (RouteCollector $router, ContainerInterface $container) {
     $router->group(
         [
             'prefix' => '/api/user',
-            // TODO 'before' => 'secured',
+            'before' => 'administrateur',
         ],
         function ($router) {
             $router->get(
@@ -111,8 +133,6 @@ return function (RouteCollector $router, ContainerInterface $container) {
                 ['/{id:\d+}', 'api_user_read'],
                 [Api\UserController::class, 'read']
             );
-
-            // ...
         }
     );
 
@@ -134,14 +154,14 @@ return function (RouteCollector $router, ContainerInterface $container) {
     $router->get(
         ['/admin', 'admin_dashboard'],
         [Admin\DashboardController::class, 'index'],
-        ['before' => 'secured']
+        ['before' => 'citoyen']
     );
 
     // Gestion des utilisateurs
     $router->group(
         [
             'prefix' => '/admin/user',
-            'before' => 'secured',
+            'before' => 'administrateur',
         ],
         function ($router) {
             $router->get(
