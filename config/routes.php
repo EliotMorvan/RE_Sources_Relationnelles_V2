@@ -83,6 +83,11 @@ return function (RouteCollector $router, ContainerInterface $container) {
         [RessourceController::class, 'delete']
     );
 
+    $router->any(
+        ['ressources/read/{id}', 'read_ressource'],
+        [RessourceController::class, 'read']
+    );
+
     // --------- API ---------
 
     // Gestion des utilisateurs

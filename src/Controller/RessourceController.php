@@ -108,6 +108,14 @@ class RessourceController extends AbstractController
         ]);
     }
 
+    public function read(int $id): Response {
+        $ressource = $this->findRessource($id);
+
+        return $this->render('ressource/read.html.twig', [
+            'ressource' => $ressource,
+        ]);
+    }
+
     private function findRessource(int $id): Ressource
     {
         $ressource = $this->repository->findOneById($id);

@@ -3,6 +3,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <div class="container">
         <div class="table-responsive">
             <table class="table table-striped">
@@ -12,7 +13,9 @@
                         <th>Titre</th>
                         <th>Contenu</th>
                         <th>Créateur</th>
+                        {% if get_user().id >= 3 %}
                         <th class="text-end">Actions</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -20,24 +23,30 @@
                     <tr>
                         <td>{{ ressource.id }}</td>
                         <td>{{ ressource.titre }}</td>
-                        <td> {{ ressource.contenu }}</td>
+                        <td>{{ ressource.contenu|length > 50 ? ressource.contenu|striptags('<b>')|slice(0, 50) ~ '...'  : ressource.contenu|striptags('<b>') }}</td>
                         <td>{{ ressource.createur.email }}</td>
+                        {% if get_user().id >= 3 %}
                         <td class="text-end min-width: 175px;">
+                            <a href="{{ path('read_ressource', [ressource.id]) }}"
+                                class="fa fa-eye" style="text-decoration: none; padding-right: 5px;"
+                                title="Consulter la ressource">
+                            </a>
                             <a href="{{ path('update_ressource', [ressource.id]) }}"
-                            class="btn btn-xs btn-warning">
-                                Modifier
+                                class="fa fa-edit" style="text-decoration: none; padding-right: 5px;"
+                                title="Modifier la ressource">
                             </a>
                             <a href="{{ path('delete_ressource', [ressource.id]) }}"
-                            class="btn btn-xs btn-danger">
-                                Supprimer
+                                class="fa fa-trash" style="text-decoration: none; color: crimson; padding-right: 5px;"
+                                title="Supprimer la ressource">
                             </a>
                         </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             {% if get_user().droit is not null %}
-            <a href="{{ path('create_ressource')}}" class="btn btn-light">Créer ressource</a>
+            <a href="{{ path('create_ressource')}}" class="btn btn-light">Créer une ressource</a>
             {% endif %}
         </div>
     </div>

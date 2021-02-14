@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Détails de la ressource{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{{ ressource.titre }}</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="{{ path('liste_ressources') }}" class="btn btn-sm btn-outline-secondary">
+                Retour à la liste
+            </a>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-sm-10">
+            <a href="{{ path('update_ressource', {'id': ressource.id}) }}"
+               class="btn btn-outline-warning">
+                Modifier la ressource
+            </a>
+            <a href="{{ path('delete_ressource', {'id': ressource.id}) }}"
+               class="btn btn-outline-danger">
+                Supprimer la ressource
+            </a>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        {{ ressource.contenu | raw}}
+    </div>
+</div>
+{% endblock %}
