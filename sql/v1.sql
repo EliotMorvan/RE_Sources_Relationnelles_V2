@@ -13,11 +13,3 @@ ALTER TABLE `ressource`
   
 ALTER TABLE `ressource`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-
-/* Utilisateur par défaut :
-   titre        : titre
-   contenu	    : contenu
-   id_createur  : 13
- */
-INSERT INTO `ressource` (`id`, `titre`, `contenu`, `id_createur`) VALUES
-(1, 'titre', 'contenu', 13);

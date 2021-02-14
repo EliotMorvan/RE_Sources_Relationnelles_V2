@@ -154,7 +154,7 @@ return function (RouteCollector $router, ContainerInterface $container) {
     $router->get(
         ['/admin', 'admin_dashboard'],
         [Admin\DashboardController::class, 'index'],
-        ['before' => 'citoyen']
+        ['before' => 'administrateur']
     );
 
     // Gestion des utilisateurs
