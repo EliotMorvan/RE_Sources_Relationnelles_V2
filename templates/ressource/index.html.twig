@@ -5,49 +5,63 @@
 {% block body %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <div class="container">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Titre</th>
-                        <th>Contenu</th>
-                        <th>Créateur</th>
-                        {% if get_user().id >= 3 %}
-                        <th class="text-end">Actions</th>
-                        {% endif %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for ressource in ressources %}
-                    <tr>
-                        <td>{{ ressource.id }}</td>
-                        <td>{{ ressource.titre }}</td>
-                        <td>{{ ressource.contenu|length > 50 ? ressource.contenu|striptags('<b>')|slice(0, 50) ~ '...'  : ressource.contenu|striptags('<b>') }}</td>
-                        <td>{{ ressource.createur.email }}</td>
-                        {% if get_user().id >= 3 %}
-                        <td class="text-end min-width: 175px;">
-                            <a href="{{ path('read_ressource', [ressource.id]) }}"
-                                class="fa fa-eye" style="text-decoration: none; padding-right: 5px;"
-                                title="Consulter la ressource">
-                            </a>
-                            <a href="{{ path('update_ressource', [ressource.id]) }}"
-                                class="fa fa-edit" style="text-decoration: none; padding-right: 5px;"
-                                title="Modifier la ressource">
-                            </a>
-                            <a href="{{ path('delete_ressource', [ressource.id]) }}"
-                                class="fa fa-trash" style="text-decoration: none; color: crimson; padding-right: 5px;"
-                                title="Supprimer la ressource">
-                            </a>
-                        </td>
-                        {% endif %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            {% if get_user().droit is not null %}
-            <a href="{{ path('create_ressource')}}" class="btn btn-light">Créer une ressource</a>
-            {% endif %}
-        </div>
+    <h3 class="mt-4">Dernières ressources</h3>
+    <div class="mt-4">
+        {% for ressource in ressources %}
+            <!-- TEMPLATE BOOTSTRAP : https://bootsnipp.com/snippets/yNa0V -->
+            <div class="card gedf-card mt-4">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- <div class="mr-2">
+                                <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                            </div> -->
+                            <div class="ml-2">
+                                <div class="h5 m-0">{{ ressource.createur.email }}</div>
+                                <!-- <div class="h7 text-muted">Miracles Lee Cross</div> -->
+                            </div>
+                        </div>
+                        <div>
+                            <div class="dropdown">
+                                {% if get_user().id == ressource.createur.id %}
+                                <td class="text-end min-width: 175px;">
+                                    <a href="{{ path('read_ressource', [ressource.id]) }}"
+                                        class="fa fa-eye" style="text-decoration: none; padding-right: 5px;"
+                                        title="Consulter la ressource">
+                                    </a>
+                                    <a href="{{ path('update_ressource', [ressource.id]) }}"
+                                        class="fa fa-edit" style="text-decoration: none; padding-right: 5px;"
+                                        title="Modifier la ressource">
+                                    </a>
+                                    <a href="{{ path('delete_ressource', [ressource.id]) }}"
+                                        class="fa fa-trash" style="text-decoration: none; color: crimson; padding-right: 5px;"
+                                        title="Supprimer la ressource">
+                                    </a>
+                                </td>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <!--<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>10 min ago</div>-->
+                    <h5 class="card-title">{{ ressource.titre }}</h5>
+                    <p class="card-text">
+                        {{ ressource.contenu|length > 50 ? ressource.contenu|striptags('<b>')|slice(0, 300) ~ '...'  : ressource.contenu|striptags('<b>') }}
+                    </p>
+                    <span class="badge" style="background-color: chocolate;">Discussion</span>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-gittip"></i> Like</a>
+                    <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-comment"></i> Comment</a>
+                    <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-mail-forward"></i> Share</a>
+                </div>
+            </div>
+        {% endfor %}
     </div>
+
+    {% if get_user().droit is not null %}
+        <a href="{{ path('create_ressource')}}" class="btn btn-light mt-4">Créer une ressource</a>
+    {% endif %}
 {% endblock %}
