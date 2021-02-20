@@ -35,6 +35,12 @@ class Ressource {
      */
     private $createur;
 
+    /**
+     * La catégorie de la ressource
+     * @var User
+     */
+    private $categorie;
+
 
     public function getId()
     {
@@ -80,6 +86,18 @@ class Ressource {
     public function setCreateur(User $createur)
     {
         $this->createur = $createur;
+
+        return $this;
+    }
+
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(string $categorie)
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }

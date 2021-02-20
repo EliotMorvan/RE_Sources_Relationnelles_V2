@@ -2,7 +2,7 @@
 
 namespace Repository;
 
-use Entity\User;
+use Entity\CategorieRessource;
 use Entity\Ressource;
 use Repository\UserRepository;
 use PDO;
@@ -43,7 +43,7 @@ class RessourceRepository
     {
         // Récupérer la liste des ressources
         $select = $this->connection->query(
-            'SELECT id, titre, contenu, id_createur FROM ressource'
+            'SELECT id, titre, contenu, id_createur, id_categorie FROM ressource'
         );
 
         // Liste des ressources à renvoyer
@@ -67,7 +67,7 @@ class RessourceRepository
     {
         // Récupérer la liste des ressources
         $select = $this->connection->query(
-            'SELECT id, titre, contenu, id_createur FROM ressource ' .
+            'SELECT id, titre, contenu, id_createur, id_categorie FROM ressource ' .
             'WHERE id=' . $id . ' ' .
             'LIMIT 1'
         );
@@ -100,6 +100,16 @@ class RessourceRepository
         $createur = $this->userRespository->findOneById($data['id_createur']);
         $ressource->setCreateur($createur);
 
+        // Récupération de la catégorie de ressource
+        $ressource->setCategorie(CategorieRessource::categories[$data['id_categorie']-1]);
         return $ressource;
+    }
+
+    function debug_to_console($data) {
+        $output = $data;
+        if (is_array($output))
+            $output = implode(',', $output);
+    
+        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
     }
 }

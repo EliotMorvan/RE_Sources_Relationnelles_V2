@@ -4,6 +4,7 @@
 
 namespace Controller;
 
+use Entity\CategorieRessource;
 use Entity\User;
 use Entity\Ressource;
 use Exception\NotFoundHttpException;
@@ -54,31 +55,37 @@ class RessourceController extends AbstractController
         $ressource = new Ressource();
         $createur = new User();
         $createur->setId(13);
+        $categories = CategorieRessource::categories;
 
         if (isset($_POST['create_ressource'])) {
             $ressource
                 ->setTitre($_POST['titre'])
                 ->setContenu($_POST['contenu'])
-                ->setCreateur($createur);
+                ->setCreateur($createur)
+                ->setCategorie($_POST['categorie']);
 
                 $this->manager->insert($ressource);
 
                 return $this->redirectToRoute('liste_ressources');
         }
 
-        $content = $this->twig->render('ressource/create.html.twig');
+        $content = $this->twig->render('ressource/create.html.twig', [
+            'categories'  => $categories,
+        ]);
         return new Response($content);
     }
 
     public function updateRessource(int $id): Response
     {
         $ressource = $this->repository->findOneById($id);
+        $categories = CategorieRessource::categories;
 
         if (isset($_POST['update_ressource']))
         {
             $ressource
                 ->setTitre($_POST['titre'])
-                ->setContenu($_POST['contenu']);
+                ->setContenu($_POST['contenu'])
+                ->setCategorie($_POST['categorie']);
 
             $this->manager->update($ressource);
             return $this->redirectToRoute('liste_ressources');
@@ -86,9 +93,11 @@ class RessourceController extends AbstractController
         
         $content = $this->twig->render('ressource/udate.html.twig', [
             'ressource'   => $ressource,
+            'categories'  => $categories,
         ]);
         return new Response($content);
     }
+    
 
     public function delete(int $id): Response
     {
