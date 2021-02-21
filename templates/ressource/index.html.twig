@@ -23,12 +23,12 @@
                         </div>
                         <div>
                             <div class="dropdown">
-                                {% if get_user().id == ressource.createur.id %}
                                 <td class="text-end min-width: 175px;">
                                     <a href="{{ path('read_ressource', [ressource.id]) }}"
                                         class="fa fa-eye" style="text-decoration: none; padding-right: 5px;"
                                         title="Consulter la ressource">
                                     </a>
+                                    {% if get_user().id == ressource.createur.id %}
                                     <a href="{{ path('update_ressource', [ressource.id]) }}"
                                         class="fa fa-edit" style="text-decoration: none; padding-right: 5px;"
                                         title="Modifier la ressource">

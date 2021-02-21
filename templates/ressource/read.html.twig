@@ -15,6 +15,7 @@
         </div>
     </div>
 
+    {% if get_user().id == ressource.createur.id %}
     <div class="row mb-3">
         <div class="col-sm-10">
             <a href="{{ path('update_ressource', {'id': ressource.id}) }}"
@@ -27,7 +28,7 @@
             </a>
         </div>
     </div>
-
+    {% endif %}
     <div class="row mb-3">
         {{ ressource.contenu | raw}}
     </div>
