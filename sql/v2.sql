@@ -14,7 +14,7 @@ ALTER TABLE `ressource`
   ADD id_categorie int;
 
 ALTER TABLE `ressource`
-  ADD FOREIGN KEY (id_createur) REFERENCES categorie_ressource(id);
+  ADD FOREIGN KEY (id_categorie) REFERENCES categorie_ressource(id);
 
 -- Ajout des catégories imposées
 
