@@ -3,6 +3,7 @@
 namespace Manager;
 
 use Entity\CategorieRessource;
+use Entity\TypeRessource;
 use Entity\User;
 use Entity\Ressource;
 use PDO;
@@ -44,8 +45,8 @@ class RessourceManager
     {
         // Prépare une requête d'insertion d'une ressource
         $insert = $this->connection->prepare(
-            'INSERT INTO ressource(titre, contenu, id_createur, id_categorie) '.
-            'VALUES (:titre, :contenu, :idCreateur, :idCategorie);'
+            'INSERT INTO ressource(titre, contenu, id_createur, id_categorie, id_type) '.
+            'VALUES (:titre, :contenu, :idCreateur, :idCategorie, :idType);'
         );
 
         // Execute la requête d'insertion
@@ -54,6 +55,7 @@ class RessourceManager
             'contenu'       => $ressource->getContenu(),
             'idCreateur'    => $ressource->getCreateur()->getId(),
             'idCategorie'   => array_search($ressource->getCategorie(), CategorieRessource::categories)+1,
+            'idType'        => array_search($ressource->getType(), TypeRessource::types)+1,
         ]);
 
         // Mettre à jour l'identifiant de la ressource
@@ -80,6 +82,7 @@ class RessourceManager
             'titre=' . $this->connection->quote($ressource->getTitre()),
             'contenu=' . $this->connection->quote($ressource->getContenu()),
             'id_categorie=' . $this->connection->quote(array_search($ressource->getCategorie(), CategorieRessource::categories)+1),
+            'id_type=' . $this->connection->quote(array_search($ressource->getType(), TypeRessource::types)+1),
         ];
         
         // Execute la requête de mise à jour

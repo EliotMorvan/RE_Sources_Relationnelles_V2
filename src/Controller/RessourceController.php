@@ -7,6 +7,7 @@ namespace Controller;
 use Entity\CategorieRessource;
 use Entity\User;
 use Entity\Ressource;
+use Entity\TypeRessource;
 use Exception\NotFoundHttpException;
 use Http\Response;
 use Twig\Environment;
@@ -56,13 +57,15 @@ class RessourceController extends AbstractController
         $createur = new User();
         $createur->setId(13);
         $categories = CategorieRessource::categories;
+        $types = TypeRessource::types;
 
         if (isset($_POST['create_ressource'])) {
             $ressource
                 ->setTitre($_POST['titre'])
                 ->setContenu($_POST['contenu'])
                 ->setCreateur($createur)
-                ->setCategorie($_POST['categorie']);
+                ->setCategorie($_POST['categorie'])
+                ->setType($_POST['type']);
 
                 $this->manager->insert($ressource);
 
@@ -71,6 +74,7 @@ class RessourceController extends AbstractController
 
         $content = $this->twig->render('ressource/create.html.twig', [
             'categories'  => $categories,
+            'types'       => $types,
         ]);
         return new Response($content);
     }
@@ -79,13 +83,15 @@ class RessourceController extends AbstractController
     {
         $ressource = $this->repository->findOneById($id);
         $categories = CategorieRessource::categories;
+        $types = TypeRessource::types;
 
         if (isset($_POST['update_ressource']))
         {
             $ressource
                 ->setTitre($_POST['titre'])
                 ->setContenu($_POST['contenu'])
-                ->setCategorie($_POST['categorie']);
+                ->setCategorie($_POST['categorie'])
+                ->setType($_POST['type']);
 
             $this->manager->update($ressource);
             return $this->redirectToRoute('liste_ressources');
@@ -94,6 +100,7 @@ class RessourceController extends AbstractController
         $content = $this->twig->render('ressource/udate.html.twig', [
             'ressource'   => $ressource,
             'categories'  => $categories,
+            'types'       => $types,
         ]);
         return new Response($content);
     }

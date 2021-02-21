@@ -37,9 +37,15 @@ class Ressource {
 
     /**
      * La catégorie de la ressource
-     * @var User
+     * @var string
      */
     private $categorie;
+
+    /**
+     * Le type de la ressource
+     * @var string
+     */
+    private $type;
 
 
     public function getId()
@@ -98,6 +104,18 @@ class Ressource {
     public function setCategorie(string $categorie)
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type)
+    {
+        $this->type = $type;
 
         return $this;
     }

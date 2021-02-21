@@ -51,6 +51,7 @@
                         {{ ressource.contenu|length > 50 ? ressource.contenu|striptags('<b>')|slice(0, 300) ~ '...'  : ressource.contenu|striptags('<b>') }}
                     </p>
                     <span class="badge" style="background-color: chocolate;">{{ressource.categorie|replace({'_': ' '})|capitalize}}</span>
+                    <span class="badge" style="background-color: CornflowerBlue;">{{ressource.type|replace({'_': ' '})|capitalize}}</span>
                 </div>
                 <div class="card-footer">
                     <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-gittip"></i> Like</a>
