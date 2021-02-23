@@ -26,14 +26,20 @@ class RessourceRepository
     */
     private $userRespository;
 
+    /** 
+     * @var CategorieRessourceRespository 
+    */
+    private $categorieRessourceRespository;
+
     /**
      * Constructor.
      *
      * @param PDO $connection La connection à la base de données.
      */
-    public function __construct(PDO $connection, UserRepository $userRespository) {
+    public function __construct(PDO $connection, UserRepository $userRespository, CategorieRessourceRepository $categorieRessourceRespository) {
         $this->connection = $connection;
         $this->userRespository = $userRespository;
+        $this->categorieRessourceRespository = $categorieRessourceRespository;
     }
 
     /**
@@ -107,7 +113,7 @@ class RessourceRepository
         $ressource->setCreateur($createur);
 
         // Récupération de la catégorie de ressource
-        $ressource->setCategorie(CategorieRessource::categories[$data['id_categorie']-1]);
+        $ressource->setCategorie($this->categorieRessourceRespository->findOneById($data['id_categorie']));
 
         // Récupération du type de la ressource
         $ressource->setType(TypeRessource::types[$data['id_type']-1]);

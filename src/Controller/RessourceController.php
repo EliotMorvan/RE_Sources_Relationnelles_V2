@@ -13,7 +13,9 @@ use Exception\NotFoundHttpException;
 use Http\Response;
 use Twig\Environment;
 use Repository\RessourceRepository;
+use Repository\CategorieRessourceRepository;
 use Manager\RessourceManager;
+use Security\Security;
 
 class RessourceController extends AbstractController
 {
@@ -32,14 +34,28 @@ class RessourceController extends AbstractController
      */
     private $repository;
 
+    /**
+     * @var CategorieRessourceRepository
+     */
+    private $categorieRessourceRepository;
+
+    /**
+     * @var Securiry
+     */
+    private $security;
+
     public function __construct(
         Environment $twig, 
         RessourceRepository $repository,
-        RessourceManager $manager)
+        CategorieRessourceRepository $categorieRessourceRepository,
+        RessourceManager $manager,
+        Security $security)
     {
         $this->twig = $twig;
         $this->repository = $repository;
+        $this->categorieRessourceRepository = $categorieRessourceRepository;
         $this->manager = $manager;
+        $this->security = $security;
     }
 
     public function index(): Response
@@ -55,20 +71,23 @@ class RessourceController extends AbstractController
     public function createRessource(): Response
     {
         $ressource = new Ressource();
+
         // Récup du créateur
-        $createur = new User();
-        $createur->setId(13);
+        $createur = $this->security->getUser();
 
         // Récup de la liste des catégories, des types
-        $categories = CategorieRessource::categories;
+        $categories = $this->categorieRessourceRepository->findAll();
         $types = TypeRessource::types;
 
         if (isset($_POST['create_ressource'])) {
+            // Récup de la catégorie depuis l'id sélectionné
+            $categorie = $this->categorieRessourceRepository->findOneById($_POST['categorie']);
+
             $ressource
                 ->setTitre($_POST['titre'])
                 ->setContenu($_POST['contenu'])
                 ->setCreateur($createur)
-                ->setCategorie($_POST['categorie'])
+                ->setCategorie($categorie)
                 ->setType($_POST['type']);
 
                 $this->manager->insert($ressource);
@@ -89,15 +108,16 @@ class RessourceController extends AbstractController
         $ressource = $this->repository->findOneById($id);
 
         // Récup de la liste des catégories, des types
-        $categories = CategorieRessource::categories;
+        $categories = $this->categorieRessourceRepository->findAll();
         $types = TypeRessource::types;
 
         if (isset($_POST['update_ressource']))
         {
+            $categorie = $this->categorieRessourceRepository->findOneById($_POST['categorie']);
             $ressource
                 ->setTitre($_POST['titre'])
                 ->setContenu($_POST['contenu'])
-                ->setCategorie($_POST['categorie'])
+                ->setCategorie($categorie)
                 ->setType($_POST['type']);
 
             $this->manager->update($ressource);

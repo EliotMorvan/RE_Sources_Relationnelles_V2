@@ -49,14 +49,15 @@ class RessourceManager
             'INSERT INTO ressource(titre, contenu, id_createur, id_categorie, id_type, date_modification) '.
             'VALUES (:titre, :contenu, :idCreateur, :idCategorie, :idType, current_timestamp);'
         );
-        
 
+        $this->debug_to_console($ressource->getCategorie()->getId());
+        
         // Execute la requête d'insertion
         $insert->execute([
             'titre'             => $ressource->getTitre(),
             'contenu'           => $ressource->getContenu(),
             'idCreateur'        => $ressource->getCreateur()->getId(),
-            'idCategorie'       => array_search($ressource->getCategorie(), CategorieRessource::categories)+1,
+            'idCategorie'       => $ressource->getCategorie()->getId(),
             'idType'            => array_search($ressource->getType(), TypeRessource::types)+1,
         ]);
 
@@ -83,7 +84,7 @@ class RessourceManager
         $couples = [
             'titre=' . $this->connection->quote($ressource->getTitre()),
             'contenu=' . $this->connection->quote($ressource->getContenu()),
-            'id_categorie=' . $this->connection->quote(array_search($ressource->getCategorie(), CategorieRessource::categories)+1),
+            'id_categorie=' . $this->connection->quote($ressource->getCategorie()->getId()),
             'id_type=' . $this->connection->quote(array_search($ressource->getType(), TypeRessource::types)+1),
             'date_modification=' . 'current_timestamp',
         ];
@@ -118,5 +119,13 @@ class RessourceManager
         $delete->execute([
             'param_id' => $ressource->getId(),
         ]);
+    }
+
+    function debug_to_console($data) {
+        $output = $data;
+        if (is_array($output))
+            $output = implode(',', $output);
+    
+        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
     }
 }

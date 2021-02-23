@@ -3,21 +3,40 @@
 namespace Entity;
 
 class CategorieRessource {
+/**
+     * L'identifiant de la ressource
+     * @var int
+     */
+    private $id;
 
-    const categories = 
-        ["Communication", 
-            "culture", 
-            "developpement_personnel",
-            "intelligence_emotionnelle",
-            "loisir",
-            "monde_professionnel",
-            "parentalité",
-            "qualité_de_vie",
-            "recherche_de_sens",
-            "sante_physique",
-            "sante_psychique",
-            "spritualité",
-            "vie_affective"
-        ];
+    /**
+     * Le titre de la ressource
+     * @var string
+     */
+    private $nom;
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
 }
 ?>

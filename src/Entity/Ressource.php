@@ -46,7 +46,7 @@ class Ressource {
 
     /**
      * La catégorie de la ressource
-     * @var string
+     * @var CategorieRessource
      */
     private $categorie;
 
@@ -110,7 +110,7 @@ class Ressource {
         return $this->categorie;
     }
 
-    public function setCategorie(string $categorie)
+    public function setCategorie(CategorieRessource $categorie)
     {
         $this->categorie = $categorie;
 

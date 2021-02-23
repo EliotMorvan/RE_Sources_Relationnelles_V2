@@ -15,7 +15,7 @@
                 {% if (ressource.categorie) == categorie %}
                 {% set selected = 'selected' %}
                 {% endif %}
-                <option value={{categorie}} {{ selected }}>{{categorie |replace({'_': ' '})|capitalize}}</option>
+                <option value={{categorie.id}} {{ selected }}>{{categorie.nom}}</option>
             {% endfor %}
         </select>
     </div>
