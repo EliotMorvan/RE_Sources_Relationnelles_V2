@@ -2,6 +2,8 @@
 
 namespace Entity;
 
+use DateTime;
+
 /**
  * Class Ressource
  *
@@ -34,6 +36,13 @@ class Ressource {
      * @var User
      */
     private $createur;
+
+    /**
+     * La dernière date de modification de la ressource
+     * @var DateTime
+     */
+    private $dateModfication;
+
 
     /**
      * La catégorie de la ressource
@@ -116,6 +125,18 @@ class Ressource {
     public function setType(string $type)
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getDateModification()
+    {
+        return $this->dateModfication;
+    }
+
+    public function setDateModfication(DateTime $dateModfication)
+    {
+        $this->dateModfication = $dateModfication;
 
         return $this;
     }

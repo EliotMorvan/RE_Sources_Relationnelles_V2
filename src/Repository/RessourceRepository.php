@@ -2,6 +2,7 @@
 
 namespace Repository;
 
+use DateTime;
 use Entity\CategorieRessource;
 use Entity\Ressource;
 use Entity\TypeRessource;
@@ -44,7 +45,7 @@ class RessourceRepository
     {
         // Récupérer la liste des ressources
         $select = $this->connection->query(
-            'SELECT id, titre, contenu, id_createur, id_categorie, id_type FROM ressource'
+            'SELECT id, titre, contenu, id_createur, id_categorie, id_type, date_modification FROM ressource'
         );
 
         // Liste des ressources à renvoyer
@@ -68,7 +69,7 @@ class RessourceRepository
     {
         // Récupérer la liste des ressources
         $select = $this->connection->query(
-            'SELECT id, titre, contenu, id_createur, id_categorie, id_type FROM ressource ' .
+            'SELECT id, titre, contenu, id_createur, id_categorie, id_type, date_modification FROM ressource ' .
             'WHERE id=' . $id . ' ' .
             'LIMIT 1'
         );
@@ -96,6 +97,10 @@ class RessourceRepository
         $ressource->setId($data['id']);
         $ressource->setTitre($data['titre']);
         $ressource->setContenu($data['contenu']);
+
+        //Réupération de la dernière date de modification
+        $dateModification = new DateTime($data['date_modification']);
+        $ressource->setDateModfication($dateModification);
 
         // Récupération du créateur de la ressource
         $createur = $this->userRespository->findOneById($data['id_createur']);

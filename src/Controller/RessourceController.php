@@ -4,6 +4,7 @@
 
 namespace Controller;
 
+use DateTime;
 use Entity\CategorieRessource;
 use Entity\User;
 use Entity\Ressource;
@@ -54,8 +55,11 @@ class RessourceController extends AbstractController
     public function createRessource(): Response
     {
         $ressource = new Ressource();
+        // Récup du créateur
         $createur = new User();
         $createur->setId(13);
+
+        // Récup de la liste des catégories, des types
         $categories = CategorieRessource::categories;
         $types = TypeRessource::types;
 
@@ -81,7 +85,10 @@ class RessourceController extends AbstractController
 
     public function updateRessource(int $id): Response
     {
+        // Récup de la ressource à modifier
         $ressource = $this->repository->findOneById($id);
+
+        // Récup de la liste des catégories, des types
         $categories = CategorieRessource::categories;
         $types = TypeRessource::types;
 

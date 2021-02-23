@@ -2,6 +2,7 @@
 
 namespace Manager;
 
+use DateTime;
 use Entity\CategorieRessource;
 use Entity\TypeRessource;
 use Entity\User;
@@ -45,17 +46,18 @@ class RessourceManager
     {
         // Prépare une requête d'insertion d'une ressource
         $insert = $this->connection->prepare(
-            'INSERT INTO ressource(titre, contenu, id_createur, id_categorie, id_type) '.
-            'VALUES (:titre, :contenu, :idCreateur, :idCategorie, :idType);'
+            'INSERT INTO ressource(titre, contenu, id_createur, id_categorie, id_type, date_modification) '.
+            'VALUES (:titre, :contenu, :idCreateur, :idCategorie, :idType, current_timestamp);'
         );
+        
 
         // Execute la requête d'insertion
         $insert->execute([
-            'titre'         => $ressource->getTitre(),
-            'contenu'       => $ressource->getContenu(),
-            'idCreateur'    => $ressource->getCreateur()->getId(),
-            'idCategorie'   => array_search($ressource->getCategorie(), CategorieRessource::categories)+1,
-            'idType'        => array_search($ressource->getType(), TypeRessource::types)+1,
+            'titre'             => $ressource->getTitre(),
+            'contenu'           => $ressource->getContenu(),
+            'idCreateur'        => $ressource->getCreateur()->getId(),
+            'idCategorie'       => array_search($ressource->getCategorie(), CategorieRessource::categories)+1,
+            'idType'            => array_search($ressource->getType(), TypeRessource::types)+1,
         ]);
 
         // Mettre à jour l'identifiant de la ressource
@@ -83,6 +85,7 @@ class RessourceManager
             'contenu=' . $this->connection->quote($ressource->getContenu()),
             'id_categorie=' . $this->connection->quote(array_search($ressource->getCategorie(), CategorieRessource::categories)+1),
             'id_type=' . $this->connection->quote(array_search($ressource->getType(), TypeRessource::types)+1),
+            'date_modification=' . 'current_timestamp',
         ];
         
         // Execute la requête de mise à jour
