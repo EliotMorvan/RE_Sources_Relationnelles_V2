@@ -9,4 +9,4 @@ ALTER TABLE `user`
    Mot de passe : admin
  */
 INSERT INTO `user` (`id`, `email`, `password`, `droit`, `nom`, `prenom`) VALUES
-(13, 'admin@example.org', 'admin', 3, 'admin', 'admin');
+(13, 'admin@example.org', '21232f297a57a5a743894a0e4a801fc3', 3, 'admin', 'admin');
