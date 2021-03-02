@@ -1,17 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #12b8a9;"">
-    <div class="container">
-     <img class="logo" src="http://localhost:8000/logo/logo.png" atl="" width="300"  height="150">
-        <a class="navbar-brand" href="{{ path('app_index') }}">(Re) Sources Relationnelles</a>          
-         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavBar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a style="padding-left: 20px;" class="navbar-brand" href="{{ path('app_index') }}">
+            <img class="logo" href="{{ path('app_index') }}" src="http://localhost:8000/logo/logo2.png" atl="" width="20%"  height="20%">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavBar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="mainNavBar">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_index') }}">Accueil</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
+        <div style="justify-content: flex-end; padding-right: 20px;" class="collapse navbar-collapse" id="mainNavBar">
+            <ul class="navbar-nav ">
                 <li class="d-flex">
                     {% if get_user().droit >= 2 %}
                         <a class="nav-link" href="{{ path('admin_dashboard') }}">Administration</a>
@@ -24,5 +19,4 @@
                 </li>
             </ul>
         </div>
-    </div>
 </nav>

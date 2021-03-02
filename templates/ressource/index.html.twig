@@ -5,7 +5,6 @@
 {% block body %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <div class="container">
-    <h3 class="mt-4">Dernières ressources</h3>
     <div class="mt-4">
         {% for ressource in ressources %}
             <!-- TEMPLATE BOOTSTRAP : https://bootsnipp.com/snippets/yNa0V -->
@@ -17,7 +16,7 @@
                                 <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
                             </div>
                             <div class="ml-2">
-                                <div class="h5 m-0">{{ ressource.createur.email }}</div>
+                                <div class="h5 m-0">&nbsp;{{ ressource.createur.email }}</div>
                                 <!-- <div class="h7 text-muted">Miracles Lee Cross</div> -->
                             </div>
                         </div>
@@ -28,7 +27,7 @@
                                         class="fa fa-eye" style="text-decoration: none; padding-right: 5px;"
                                         title="Consulter la ressource">
                                     </a>
-                                    {% if get_user().id == ressource.createur.id %}
+                                    {% if (get_user().id == ressource.createur.id) or (get_user().droit >= 2) %}
                                     <a href="{{ path('update_ressource', [ressource.id]) }}"
                                         class="fa fa-edit" style="text-decoration: none; padding-right: 5px;"
                                         title="Modifier la ressource">
