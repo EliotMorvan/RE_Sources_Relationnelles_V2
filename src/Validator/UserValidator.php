@@ -29,6 +29,14 @@ class UserValidator
             $errors['email'] = "Cette adresse email n'est pas valide.";
         }
 
+        if (empty($user->getPrenom())) {
+            $errors['prenom'] = "Veuillez saisir votre prénom.";
+        }
+
+        if (empty($user->getNom())) {
+            $errors['nom'] = "Veuillez saisir votre nom.";
+        }
+
         // Si l'utilisateur n'a pas d'identifiant
         // (on s'apprête à créer cet utilisateur)
         if (null === $user->getId()) {

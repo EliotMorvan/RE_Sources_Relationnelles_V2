@@ -60,6 +60,12 @@ class UserController
         if (isset($_POST['password'])) {
             $user->setPlainPassword($_POST['password']);
         }
+        if (isset($_POST['prenom'])) {
+            $user->setPrenom($_POST['prenom']);
+        }
+        if (isset($_POST['nom'])) {
+            $user->setNom($_POST['nom']);
+        }
         $user->setDroit(0);
 
         $errors = $this->validator->validate($user);
@@ -94,8 +100,10 @@ class UserController
     private function normalize(User $user): array
     {
         return [
-            'id'    => $user->getId(),
-            'email' => $user->getEmail(),
+            'id'     => $user->getId(),
+            'email'  => $user->getEmail(),
+            'prenom' => $user->getPrenom(),
+            'nom'    => $user->getNom(),
         ];
     }
 }

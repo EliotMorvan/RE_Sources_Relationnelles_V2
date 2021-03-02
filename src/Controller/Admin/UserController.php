@@ -54,7 +54,9 @@ class UserController extends AbstractController
             $user
                 ->setEmail($_POST['email'])
                 ->setPlainPassword($_POST['password'])
-                ->setDroit($_POST['droit']);
+                ->setDroit($_POST['droit'])
+                ->setPrenom($_POST['prenom'])
+                ->setNom($_POST['nom']);
 
             $errors = $this->validator->validate($user);
 
@@ -90,7 +92,9 @@ class UserController extends AbstractController
             $user
                 ->setEmail($_POST['email'])
                 ->setPlainPassword($_POST['password'])
-                ->setDroit($_POST['droit']);
+                ->setDroit($_POST['droit'])
+                ->setPrenom($_POST['prenom'])
+                ->setNom($_POST['nom']);
 
             $errors = $this->validator->validate($user);
 

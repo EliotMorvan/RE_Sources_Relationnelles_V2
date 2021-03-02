@@ -19,11 +19,11 @@
             <div class="row">
                 <div class="mt-4 col-md-3">
                 {% if get_user() %}
-                    <div class="card">
+                    <div class="card" >
                         <div class="card-body">
-                            <div class="h5">{{ get_user().email }}</div>
-                            <!--<div class="h7 text-muted">Fullname : Miracles Lee Cross</div>
-                            <div class="h7">Developer of web applications, JavaScript, PHP, Java, Python, Ruby, Java, Node.js,
+                            <div class="h5">{{ get_user().prenom }} {{ get_user().nom }}</div>
+                            <div class="h7 text-muted">{{ get_user().email }}</div>
+                             <!--<div class="h7">Developer of web applications, JavaScript, PHP, Java, Python, Ruby, Java, Node.js,
                                 etc.
                             </div> -->
                         </div>

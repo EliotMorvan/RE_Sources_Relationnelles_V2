@@ -45,6 +45,18 @@ class User {
      */
     private $droit;
 
+    /**
+     * Prenom de l'utilisateur
+     * @var string
+     */
+    private $prenom;
+
+    /**
+     * Nom de l'utilisateur
+     * @var string
+     */
+    private $nom;
+
 
     public function getId()
     {
@@ -131,5 +143,29 @@ class User {
         } else {
             return false;
         }
+    }
+
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom)
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
     }
 }

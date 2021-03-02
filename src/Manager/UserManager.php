@@ -48,8 +48,8 @@ class UserManager
     {
         // Prépare une requête d'insertion d'un utilisateur
         $insert = $this->connection->prepare(
-            'INSERT INTO user(email, password, droit) '.
-            'VALUES (:email, :password, :droit);'
+            'INSERT INTO user(email, password, droit, nom, prenom) '.
+            'VALUES (:email, :password, :droit, :nom, :prenom);'
         );
 
         // Encode le mot de passe de l'utilisateur
@@ -61,6 +61,8 @@ class UserManager
             'email'    => $user->getEmail(),
             'password' => $user->getPassword(),
             'droit'    => 0,
+            'nom'      => $user->getNom(),
+            'prenom'      => $user->getPrenom(),
         ]);
 
         // Mettre à jour l'identifiant de l'utilisateur
@@ -96,9 +98,13 @@ class UserManager
             // Ajoute à la liste des champs à mettre à jour
             $couples[] = 'password=' . $this->connection->quote($encoded);
         }
-            //Ajout champ droit
-            $couples []=     'droit=' . $this->connection->quote($user->getDroit());
+        //Ajout champ droit
+        $couples[] = 'droit=' . $this->connection->quote($user->getDroit());
 
+        // Ajout du Nom / Prenom
+        $couples[] = 'nom' . $this->connection->quote($user->getNom());
+        $couples[] = 'prenom' . $this->connection->quote($user->getPrenom());
+        
         // Execute la requête de mise à jour
         $this->connection->query(
             'UPDATE user SET ' . implode(',', $couples) .
