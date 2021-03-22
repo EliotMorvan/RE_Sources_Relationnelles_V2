@@ -1,11 +1,21 @@
 {% extends 'base.html.twig' %}
 
-
 {% block title %}Détails de la ressource{% endblock %}
 
 
 {% block body %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <div class="container">
+
+    <ul class="nav nav-pills" style="flex-wrap: nowrap; padding-top: 10px;">
+        <li class="nav-item list-group-item-action" style="border: outset"><a data-toggle="pill" class="nav-link" href="#details">Détails</a></li>
+        <li class="nav-item list-group-item-action" style="border: outset"><a data-toggle="pill" class="nav-link" href="#commentaires">Commentaires</a></li>
+    </ul>
+
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">{{ ressource.titre }}</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
@@ -15,22 +25,30 @@
         </div>
     </div>
 
-    {% if get_user().id == ressource.createur.id %}
-    <div class="row mb-3">
-        <div class="col-sm-10">
-            <a href="{{ path('update_ressource', {'id': ressource.id}) }}"
-               class="btn btn-outline-warning">
-                Modifier la ressource
-            </a>
-            <a href="{{ path('delete_ressource', {'id': ressource.id}) }}"
-               class="btn btn-outline-danger">
-                Supprimer la ressource
-            </a>
+    <div class="tab-content">
+        <div id="details" class="tab-pane active">
+            {% if get_user().id == ressource.createur.id or get_user().droit >= 1 %}
+            <div class="row mb-3">
+                <div class="col-sm-10">
+                    <a href="{{ path('update_ressource', {'id': ressource.id}) }}"
+                    class="btn btn-outline-warning">
+                        Modifier la ressource
+                    </a>
+                    <a href="{{ path('delete_ressource', {'id': ressource.id}) }}"
+                    class="btn btn-outline-danger">
+                        Supprimer la ressource
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+            <div class="row mb-3">
+                {{ ressource.contenu | raw}}
+            </div>
+        </div>
+        <div id="commentaires" class="tab-pane">
+            {% include 'ressource/commentaires/_form.html.twig' %}
         </div>
     </div>
-    {% endif %}
-    <div class="row mb-3">
-        {{ ressource.contenu | raw}}
-    </div>
+
 </div>
 {% endblock %}

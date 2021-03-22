@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Suppression commentaire{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Supprimer le commentaire ?</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="{{ path('liste_ressources') }}" class="btn btn-sm btn-outline-secondary">
+                Retour à la liste
+            </a>
+        </div>
+    </div>
+
+    <form action="{{ path('ressource_delete', {'id': commentaire.id}) }}" method="post">
+        <div class="row mb-3">
+            <div class="col-sm-10 offset-sm-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="confirm" id="confirm" value="1" required>
+                    <label class="form-check-label" for="confirm">
+                        Confirmer la suppression ?
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" name="delete_commentaire" class="btn btn-danger">
+                    Supprimer
+                </button>
+                <a href="{{ path('liste_ressources') }}" class="btn btn-light">
+                    Annuler
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

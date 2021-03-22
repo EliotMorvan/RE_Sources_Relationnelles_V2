@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% for commentaire in ressource.commentaires %}
+  <div class="toast" style="opacity: 1; width:100%;" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+          <div class="mr-2">
+            <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+        </div>
+        <div class="ml-2">
+            <div class="h5 m-0">&nbsp;{{ commentaire.createur.prenom }}&nbsp;{{ commentaire.createur.nom }}</div>
+            <div class="h7 text-muted">&nbsp;{{ commentaire.createur.email }}</div>
+        </div>
+        <div class="text-muted" style="margin-left:auto;"> <i class="fa fa-clock-o"></i> 
+          {{commentaire.dateModification|date('d-m-Y')}} à {{commentaire.dateModification|date('H:i')}}
+        </div>
+        <div class="dropdown" style="padding-left: 10px;">
+          <a href="{{ path('delete_commentaire', [commentaire.id]) }}"
+            class="fa fa-trash" style="text-decoration: none; color: crimson; padding-right: 5px;"
+            title="Supprimer le commentaire">
+          </a>
+        </div>
+    </div>
+    <div class="toast-body">
+      {{commentaire.contenu}}
+    </div>
+  </div>
+{% endfor %}
+
+{% if get_user() %}
+<form action="{{ path('read_ressource', {'id': ressource.id}) }}" method="post">
+  <div class="input-group mb-3" style="padding-top: 30px;">
+    <input type="text" class="form-control" name="commentaire" aria-label="Default">
+    <button type="submit" name="poster_commentaire" class="btn btn-success">
+        Poster le commentaire
+    </button>
+  </div>
+</form>
+{% endif %}

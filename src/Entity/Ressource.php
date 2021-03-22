@@ -56,6 +56,11 @@ class Ressource {
      */
     private $type;
 
+    /**
+     * Les commentaires de la ressource
+     * @var Array
+     */
+    private $commentaires;
 
     public function getId()
     {
@@ -138,6 +143,17 @@ class Ressource {
     {
         $this->dateModfication = $dateModfication;
 
+        return $this;
+    }
+
+    public function getCommentaires()
+    {
+        return $this->commentaires;
+    }
+
+    public function setCommentaires(Array $commentaires)
+    {
+        $this->commentaires = $commentaires;
         return $this;
     }
 }

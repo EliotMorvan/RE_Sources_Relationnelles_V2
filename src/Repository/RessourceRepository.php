@@ -4,6 +4,7 @@ namespace Repository;
 
 use DateTime;
 use Entity\CategorieRessource;
+use Entity\Commentaire;
 use Entity\Ressource;
 use Entity\TypeRessource;
 use Repository\UserRepository;
@@ -31,15 +32,21 @@ class RessourceRepository
     */
     private $categorieRessourceRespository;
 
+    /** 
+     * @var CommentaireRepository 
+    */
+    private $commentaireRespository;
+
     /**
      * Constructor.
      *
      * @param PDO $connection La connection à la base de données.
      */
-    public function __construct(PDO $connection, UserRepository $userRespository, CategorieRessourceRepository $categorieRessourceRespository) {
+    public function __construct(PDO $connection, UserRepository $userRespository, CategorieRessourceRepository $categorieRessourceRespository, CommentaireRepository $commentaireRespository) {
         $this->connection = $connection;
         $this->userRespository = $userRespository;
         $this->categorieRessourceRespository = $categorieRessourceRespository;
+        $this->commentaireRespository = $commentaireRespository;
     }
 
     /**
@@ -90,6 +97,25 @@ class RessourceRepository
         return $this->buildRessource($data);
     }
 
+    public function findOneCommentaireById(int $id): ?Commentaire
+    {
+        // Récupérer la liste des ressources
+        $select = $this->connection->query(
+            'SELECT id, id_user, id_ressource, contenu, date_modification FROM commentaire ' .
+            'WHERE id=' . $id . ' ' .
+            'LIMIT 1'
+        );
+
+        $data = $select->fetch(PDO::FETCH_ASSOC);
+
+        if (false === $data) {
+            return null;
+        }
+
+        // Renvoi le commentaire
+        return $this->buildCommentaire($data);
+    }
+
     /**
      * Builds the user from the given data.
      *
@@ -117,6 +143,40 @@ class RessourceRepository
 
         // Récupération du type de la ressource
         $ressource->setType(TypeRessource::types[$data['id_type']-1]);
+
+        // Récupération des commentaires
+        $commentaires = $this->commentaireRespository->findAllForIdRessource($data['id']);
+        $ressource->setCommentaires($commentaires);
+
         return $ressource;
+    }
+
+    private function buildCommentaire(array $data): Commentaire
+    {
+        $commentaire = new Commentaire();
+        $commentaire->setId($data['id']);
+        $commentaire->setContenu($data['contenu']);
+
+        //Réupération de la dernière date du commentaire
+        $dateModification = new DateTime($data['date_modification']);
+        $commentaire->setDateModfication($dateModification);
+
+        // Récupération du créateur du commentaire
+        $createur = $this->userRespository->findOneById($data['id_user']);
+        $commentaire->setCreateur($createur);
+
+        // Récupération de la ressource du commentaire
+        $ressource = $this->findOneById($data['id_ressource']);
+        $commentaire->setRessource($ressource);
+
+        return $commentaire;
+    }
+
+    function debug_to_console($data) {
+        $output = $data;
+        if (is_array($output))
+            $output = implode(',', $output);
+    
+        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
     }
 }

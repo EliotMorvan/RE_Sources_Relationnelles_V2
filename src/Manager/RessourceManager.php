@@ -4,6 +4,7 @@ namespace Manager;
 
 use DateTime;
 use Entity\CategorieRessource;
+use Entity\Commentaire;
 use Entity\TypeRessource;
 use Entity\User;
 use Entity\Ressource;
@@ -50,8 +51,6 @@ class RessourceManager
             'VALUES (:titre, :contenu, :idCreateur, :idCategorie, :idType, current_timestamp);'
         );
 
-        $this->debug_to_console($ressource->getCategorie()->getId());
-        
         // Execute la requête d'insertion
         $insert->execute([
             'titre'             => $ressource->getTitre(),
@@ -118,6 +117,42 @@ class RessourceManager
         // Execute la requête de suppression
         $delete->execute([
             'param_id' => $ressource->getId(),
+        ]);
+    }
+
+    public function posterCommentaire(Commentaire $commentaire, Ressource $ressource, User $createur): void {
+
+        // Prépare une requête d'insertion d'un commentaire à une ressource
+        $insert = $this->connection->prepare(
+            'INSERT INTO commentaire(id_user, id_ressource, contenu, date_modification) '.
+            'VALUES (:idUser, :idRessource, :contenu, current_timestamp);'
+        );
+
+        // Execute la requête d'insertion
+        $insert->execute([
+            'idUser'            => $createur->getId(),
+            'idRessource'       => $ressource->getId(),
+            'contenu'           => $commentaire->getContenu(),
+        ]);
+
+        // Mettre à jour l'identifiant du commentaire
+        $commentaire->setId($this->connection->lastInsertId());
+    }
+
+    public function deleteCommentaire(int $id): void {
+
+        if (0 >= $id) {
+            throw new \Exception("Ressource introuvable");
+        }
+
+        // Prépare la requête de suppression
+        $delete = $this->connection->prepare(
+            'DELETE FROM commentaire WHERE id=:param_id LIMIT 1'
+        );
+
+        // Execute la requête de suppression
+        $delete->execute([
+            'param_id' => $id,
         ]);
     }
 

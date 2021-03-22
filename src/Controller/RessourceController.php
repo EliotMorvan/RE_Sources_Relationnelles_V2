@@ -6,6 +6,7 @@ namespace Controller;
 
 use DateTime;
 use Entity\CategorieRessource;
+use Entity\Commentaire;
 use Entity\User;
 use Entity\Ressource;
 use Entity\TypeRessource;
@@ -151,8 +152,40 @@ class RessourceController extends AbstractController
         ]);
     }
 
+    public function deleteCommentaire(int $id): Response
+    {
+        $commentaire = $this->findCommentaire($id);
+
+        if (isset($_POST['delete_commentaire'])) {
+            // Si l'internaute a confirmé
+            if ($_POST['confirm'] === '1') {
+                $this->manager->deleteCommentaire($commentaire->getId());
+
+                return $this->redirectToRoute('liste_ressources');
+            }
+        }
+
+        return $this->render('ressource/commentaires/delete.html.twig', [
+            'commentaire' => $commentaire,
+        ]);
+    }
+
     public function read(int $id): Response {
         $ressource = $this->findRessource($id);
+
+        if (isset($_POST['poster_commentaire']))
+        {
+            // Récup du créateur
+            $createur = $this->security->getUser();
+
+            $commentaire = new Commentaire();
+            $commentaire->setContenu($_POST['commentaire'])
+                ->setCreateur($createur)
+                ->setRessource($ressource);
+
+            $this->manager->posterCommentaire($commentaire, $ressource, $createur);
+            return $this->redirectToRoute('liste_ressources');
+        }
 
         return $this->render('ressource/read.html.twig', [
             'ressource' => $ressource,
@@ -168,5 +201,24 @@ class RessourceController extends AbstractController
         }
 
         return $ressource;
+    }
+
+    private function findCommentaire(int $id): Commentaire
+    {
+        $commentaire = $this->repository->findOneCommentaireById($id);
+
+        if (null === $commentaire) {
+            throw new NotFoundHttpException("Commentaire introuvable.");
+        }
+
+        return $commentaire;
+    }
+
+    function debug_to_console($data) {
+        $output = $data;
+        if (is_array($output))
+            $output = implode(',', $output);
+    
+        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
     }
 }

@@ -110,6 +110,11 @@ return function (RouteCollector $router, ContainerInterface $container) {
         [RessourceController::class, 'read']
     );
 
+    $router->any(
+        ['ressources/commentaires/delete/{id}', 'delete_commentaire'],
+        [RessourceController::class, 'deleteCommentaire']
+    );
+
     // --------- API ---------
 
     // Gestion des utilisateurs
