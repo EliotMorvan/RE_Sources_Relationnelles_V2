@@ -1,0 +1,33 @@
+
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <div class="container my-4">
+
+    <h1 title="Catégorie de ressource" class="border-left-0 rounded" style="background-color: steelblue; color: white; padding: 10px;">Liste des types de ressource</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{{ path('liste_ressources') }}" class="btn btn-sm btn-outline-secondary">
+            Retour à la liste
+        </a>
+    </div>
+
+    <div class="mt-4">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+            {% for type in types|sort(a => a.nom) %}
+
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <a href="{{ path('type_ressource', [type]) }}" style="text-decoration: none; color: black;">
+                        <div class="card btn btn-outline-dark" style="width: 15rem; margin: 10px;">
+                            <div class="card-body col-md-12 col-sm-12 center-col text-center">
+                                <h5 class="card-title">{{type|replace({'_': ' '})|capitalize}}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            {% endfor %}
+        </div>
+
+{% endblock %}

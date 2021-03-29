@@ -58,7 +58,7 @@ class RessourceRepository
     {
         // Récupérer la liste des ressources
         $select = $this->connection->query(
-            'SELECT id, titre, contenu, id_createur, id_categorie, id_type, date_modification FROM ressource'
+            'SELECT id, titre, contenu, id_createur, id_categorie, id_type, date_modification FROM ressource ORDER BY date_modification DESC'
         );
 
         // Liste des ressources à renvoyer
@@ -70,6 +70,36 @@ class RessourceRepository
         }
 
         // Renvoi la liste des utilisateurs
+        return $ressources;
+    }
+
+    public function findAllForCategory(int $id): array
+    {
+        $select = $this->connection->query(
+            'SELECT id, titre, contenu, id_createur, id_categorie, id_type, date_modification FROM ressource WHERE id_categorie = ' . $id
+        );
+
+        $ressources = [];
+
+        while (false !== $data = $select->fetch(PDO::FETCH_ASSOC)) {
+            $ressources[] = $this->buildRessource($data);
+        }
+
+        return $ressources;
+    }
+
+    public function findAllForType(int $id): array
+    {
+        $select = $this->connection->query(
+            'SELECT id, titre, contenu, id_createur, id_categorie, id_type, date_modification FROM ressource WHERE id_type = ' . $id
+        );
+
+        $ressources = [];
+
+        while (false !== $data = $select->fetch(PDO::FETCH_ASSOC)) {
+            $ressources[] = $this->buildRessource($data);
+        }
+
         return $ressources;
     }
 

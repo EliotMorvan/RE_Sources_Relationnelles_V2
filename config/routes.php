@@ -3,6 +3,7 @@
 use Controller\Admin;
 use Controller\Api;
 use Controller\AppController;
+use Controller\CategorieRessourceController;
 use Controller\TestController;
 use Controller\RessourceController;
 use Http\RedirectResponse;
@@ -113,6 +114,30 @@ return function (RouteCollector $router, ContainerInterface $container) {
     $router->any(
         ['ressources/commentaires/delete/{id}', 'delete_commentaire'],
         [RessourceController::class, 'deleteCommentaire']
+    );
+
+    // --------- Catégories de ressource ---------
+
+    $router->get(
+        ['/categories/liste', 'liste_categorie_ressource'],
+        [CategorieRessourceController::class, 'liste']
+    );
+    
+    $router->get(
+        ['/categorie/{id}', 'categorie_ressource'],
+        [CategorieRessourceController::class, 'index']
+    );
+
+    // --------- Types de ressource ---------
+
+    $router->get(
+        ['/types/liste', 'liste_type_ressource'],
+        [CategorieRessourceController::class, 'listeType']
+    );
+    
+    $router->get(
+        ['/type/{nom}', 'type_ressource'],
+        [CategorieRessourceController::class, 'indexType']
     );
 
     // --------- API ---------
