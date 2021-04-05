@@ -4,6 +4,7 @@ use Controller\Admin;
 use Controller\Api;
 use Controller\AppController;
 use Controller\CategorieRessourceController;
+use Controller\FavorisController;
 use Controller\TestController;
 use Controller\RessourceController;
 use Http\RedirectResponse;
@@ -11,6 +12,7 @@ use Phroute\Phroute\RouteCollector;
 use Psr\Container\ContainerInterface;
 use Router\Router;
 use Security\Security;
+
 
 /**
  * Configuration des routes.
@@ -110,6 +112,11 @@ return function (RouteCollector $router, ContainerInterface $container) {
         ['ressources/read/{id}', 'read_ressource'],
         [RessourceController::class, 'read']
     );
+// ---------- Gestion des favoris ----------
+$router->get(
+    ['/favoris', 'liste_favoris'],
+    [FavorisController::class, 'index']
+);
 
     $router->any(
         ['ressources/commentaires/delete/{id}', 'delete_commentaire'],

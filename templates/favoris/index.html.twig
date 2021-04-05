@@ -1,12 +1,13 @@
-{# templates/ressource/index.html.twig #}
-
-{% extends "base.html.twig" %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <div class="container mt-5">
+        <h1>Favoris</h1>
+        <p>voici la liste des favoris:</p>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <div class="container my-4">
     <div class="mt-4">
-        {% for ressource in ressources %}
+        {% for ressource in favoris %}
             <!-- TEMPLATE BOOTSTRAP : https://bootsnipp.com/snippets/yNa0V -->
             <div class="card gedf-card mt-4">
                 <div class="card-header">
@@ -62,20 +63,13 @@
                         </a>
                     </span>
                 </div>
-                <div class="card-footer">
-                    {% if get_user().id in ressource.userFavoris %}
-                        <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-star"></i> Retirer des favoris</a>
-                    {% else %}
-                        <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-star-o"></i> Ajouter aux favoris</a>
-                    {% endif %}
-                    <!-- <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-comment"></i> Comment</a>
-                    <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-mail-forward"></i> Share</a> -->
-                </div>
+                <!-- <div class="card-footer">
+                    <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-gittip"></i> Like</a>
+                    <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-comment"></i> Comment</a>
+                    <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-mail-forward"></i> Share</a>
+                </div> -->
             </div>
         {% endfor %}
     </div>
-
-    {% if get_user().droit is not null %}
-        <a href="{{ path('create_ressource')}}" class="btn btn-success mt-4">Créer une ressource</a>
-    {% endif %}
+    </div>
 {% endblock %}

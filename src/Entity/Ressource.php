@@ -62,6 +62,12 @@ class Ressource {
      */
     private $commentaires;
 
+    /**
+     * Tous les users qui ont mis cette ressource en favoris
+     * @var Array
+     */
+    private $userFavoris;
+
     public function getId()
     {
         return $this->id;
@@ -154,6 +160,17 @@ class Ressource {
     public function setCommentaires(Array $commentaires)
     {
         $this->commentaires = $commentaires;
+        return $this;
+    }
+
+    public function getUserFavoris()
+    {
+        return $this->userFavoris;
+    }
+
+    public function setUserFavoris(Array $userFavoris)
+    {
+        $this->userFavoris = $userFavoris;
         return $this;
     }
 }

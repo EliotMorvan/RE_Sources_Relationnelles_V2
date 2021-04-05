@@ -33,10 +33,14 @@
                 <span><a href="{{ path('liste_type_ressource')}}" style="text-decoration: none; color: black;">
                     types disponibles
                 </a></span>
-                <span>vos favoris</span>
+                {% if get_user().droit is not null %}
+                    <span><a href="{{ path('liste_favoris')}}"style="text-decoration: none; color: black;">
+                        favoris</a></span>
+                {% endif %}
             </div>
             </fieldset>
         </form>
         </div>
+
     </div>
 {% endblock %}

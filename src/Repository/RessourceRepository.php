@@ -37,16 +37,23 @@ class RessourceRepository
     */
     private $commentaireRespository;
 
+    /** 
+     * @var FavorisRepository 
+    */
+    private $favorisRespository;
+
+
     /**
      * Constructor.
      *
      * @param PDO $connection La connection à la base de données.
      */
-    public function __construct(PDO $connection, UserRepository $userRespository, CategorieRessourceRepository $categorieRessourceRespository, CommentaireRepository $commentaireRespository) {
+    public function __construct(PDO $connection, UserRepository $userRespository, CategorieRessourceRepository $categorieRessourceRespository, CommentaireRepository $commentaireRespository, FavorisRepository $favorisRepository) {
         $this->connection = $connection;
         $this->userRespository = $userRespository;
         $this->categorieRessourceRespository = $categorieRessourceRespository;
         $this->commentaireRespository = $commentaireRespository;
+        $this->favorisRespository = $favorisRepository;
     }
 
     /**
@@ -177,6 +184,10 @@ class RessourceRepository
         // Récupération des commentaires
         $commentaires = $this->commentaireRespository->findAllForIdRessource($data['id']);
         $ressource->setCommentaires($commentaires);
+
+        // Récup des user favoris pour cette ressource
+        $userFavoris = $this->favorisRespository->findIdRessource($ressource->getId());
+        $ressource->setUserFavoris($userFavoris);
 
         return $ressource;
     }
