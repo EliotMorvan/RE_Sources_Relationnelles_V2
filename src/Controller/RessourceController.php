@@ -69,6 +69,16 @@ class RessourceController extends AbstractController
         return new Response($content);
     }
 
+    public function indexReg(string $reg): Response
+    {
+        $ressources = $this->repository->findAllForReg($reg);
+        $content = $this->twig->render('ressource/indexReg.html.twig', [
+            'reg'        => $reg,
+            'ressources' => $ressources,
+        ]);
+        return new Response($content);
+    }
+
     public function createRessource(): Response
     {
         $ressource = new Ressource();

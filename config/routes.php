@@ -93,6 +93,11 @@ return function (RouteCollector $router, ContainerInterface $container) {
         [RessourceController::class, 'index']
     );
 
+    $router->get(
+        ['/ressources/{reg}', 'liste_ressources_reg'],
+        [RessourceController::class, 'indexReg']
+    );
+
     $router->any(
         ['ressources/creation', 'create_ressource'],
         [RessourceController::class, 'createRessource']
@@ -145,6 +150,18 @@ $router->get(
     $router->get(
         ['/type/{nom}', 'type_ressource'],
         [CategorieRessourceController::class, 'indexType']
+    );
+
+    // --------- Types de ressource ---------
+
+    $router->get(
+        ['/favoris/create/{id}', 'create_favoris'],
+        [FavorisController::class, 'create']
+    );
+
+    $router->get(
+        ['/favoris/delete/{id}', 'delete_favoris'],
+        [FavorisController::class, 'delete']
     );
 
     // --------- API ---------

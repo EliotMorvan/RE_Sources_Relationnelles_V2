@@ -1,0 +1,31 @@
+<div class="container-sm" style="margin-top: 1.5rem;">
+    <div class="card" style="width: 18rem; margin-bottom: 20px;">
+    <div class="card-body">
+        <h5 class="card-title">Favoris</h5>
+        {% if ressource.userFavoris|length > 1 %}
+            <p class="card-text">{{ressource.userFavoris|length}} utilisateurs ont ajoutés cette ressource en favoris.</p>
+        {% elseif ressource.userFavoris|length == 1 %}
+            <p class="card-text">{{ressource.userFavoris|length}} utilisateur a ajouté cette ressource en favoris.</p>
+        {% elseif ressource.userFavoris|length == 0 %}
+            <p class="card-text">Aucun utilisateur n'a encore ajouté cette ressource en favoris</p>
+        {% endif %}
+
+        {% if get_user().id in ressource.userFavoris %}
+            <a href="{{ path('delete_favoris', [ressource.id]) }}" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-star"></i> La retirer des favoris</a>
+        {% else %}
+            <a href="{{ path('create_favoris', [ressource.id]) }}" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-star-o"></i> L'ajouter aux favoris</a>
+        {% endif %}
+    </div>
+    </div>
+
+    <div class="card" style="width: 18rem;">
+    <div class="card-header">
+        Featured
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Cras justo odio</li>
+        <li class="list-group-item">Dapibus ac facilisis in</li>
+        <li class="list-group-item">Vestibulum at eros</li>
+    </ul>
+    </div>
+</div>

@@ -7,7 +7,6 @@
     <div class="container my-4">
     <div class="mt-4">
         {% for ressource in ressources %}
-            <!-- TEMPLATE BOOTSTRAP : https://bootsnipp.com/snippets/yNa0V -->
             <div class="card gedf-card mt-4">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
@@ -64,9 +63,9 @@
                 </div>
                 <div class="card-footer">
                     {% if get_user().id in ressource.userFavoris %}
-                        <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-star"></i> Retirer des favoris</a>
+                        <a href="{{ path('delete_favoris', [ressource.id]) }}" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-star"></i> Retirer des favoris</a>
                     {% else %}
-                        <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-star-o"></i> Ajouter aux favoris</a>
+                        <a href="{{ path('create_favoris', [ressource.id]) }}" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-star-o"></i> Ajouter aux favoris</a>
                     {% endif %}
                     <!-- <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-comment"></i> Comment</a>
                     <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-mail-forward"></i> Share</a> -->

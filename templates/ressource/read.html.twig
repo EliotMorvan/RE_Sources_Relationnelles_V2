@@ -1,7 +1,6 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseRessource.html.twig' %}
 
 {% block title %}Détails de la ressource{% endblock %}
-
 
 {% block body %}
 <meta charset="utf-8">
@@ -9,7 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<div class="container">
+<div class="container" style="max-width: 850px">
 
     <ul class="nav nav-pills" style="flex-wrap: nowrap; padding-top: 10px;">
         <li class="nav-item list-group-item-action" style="border: outset"><a data-toggle="pill" class="nav-link" href="#details">Détails</a></li>
@@ -49,6 +48,7 @@
             {% include 'ressource/commentaires/_form.html.twig' %}
         </div>
     </div>
-
 </div>
+{% include 'ressource/favoris/_form.html.twig' %}
+
 {% endblock %}

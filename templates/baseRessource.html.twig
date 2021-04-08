@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}Administration{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+              integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+              rel="stylesheet"  crossorigin="anonymous">
+    {% endblock %}
+</head>
+<body>
+
+    {% include 'fragment/navbar.html.twig' %}
+    <div class="container-fluid gedf-wrapper">
+            <div class="row">
+                <div class="mt-4 col-md-3">
+                {% if get_user() %}
+                    <div class="card" >
+                        <div class="card-body">
+                            <div class="h5">{{ get_user().prenom }} {{ get_user().nom }}</div>
+                            <div class="h7 text-muted">{{ get_user().email }}</div>
+                             <!--<div class="h7">Developer of web applications, JavaScript, PHP, Java, Python, Ruby, Java, Node.js,
+                                etc.
+                            </div> -->
+                        </div>
+                        <!-- <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div class="h6 text-muted">Followers</div>
+                                <div class="h5">5.2342</div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="h6 text-muted">Following</div>
+                                <div class="h5">6758</div>
+                            </li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                        </ul> -->
+                    </div>
+                {% endif %}
+                </div>
+
+                <div class="col-md-6 gedf-main" style="width: 75%; display: flex;">
+                {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+
+    {% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous"></script>
+    {% endblock %}
+
+</body>
+</html>

@@ -80,6 +80,22 @@ class RessourceRepository
         return $ressources;
     }
 
+    public function findAllForReg(string $reg)
+    {
+        $select = $this->connection->query(
+            `SELECT id, titre, contenu, id_createur, id_categorie, id_type, date_modification FROM ressource WHERE ressource.titre like '%` . $reg . `%' ORDER BY date_modification DESC`
+        );
+
+        $ressources = [];
+
+        while (false !== $data = $select->fetch(PDO::FETCH_ASSOC)) {
+            $ressources[] = $this->buildRessource($data);
+        }
+
+        // Renvoi la liste des utilisateurs
+        return $ressources;
+    }
+
     public function findAllForCategory(int $id): array
     {
         $select = $this->connection->query(
