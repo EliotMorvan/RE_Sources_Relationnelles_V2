@@ -8,6 +8,9 @@ CREATE TABLE `categorie_ressource` (
 ALTER TABLE `categorie_ressource`
   ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `categorie_ressource`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
 -- Une ressource possède une catégorie de ressource
 
 ALTER TABLE `ressource`

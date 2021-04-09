@@ -245,4 +245,38 @@ $router->get(
         }
     );
 
+    // Gestion des catégories de ressource
+    $router->group(
+        [
+            'prefix' => '/admin/categorie',
+            'before' => 'administrateur',
+        ],
+        function ($router) {
+            $router->get(
+                ['/', 'admin_categorie_ressource_index'],
+                [Admin\CategorieRessourceController::class, 'index']
+            );
+
+            $router->any(
+                ['/create', 'admin_categorie_ressource_create'],
+                [Admin\CategorieRessourceController::class, 'create']
+            );
+
+            $router->get(
+                ['/read/{id:\d+}', 'admin_categorie_ressource_read'],
+                [Admin\CategorieRessourceController::class, 'read']
+            );
+
+            $router->any(
+                ['/update/{id:\d+}', 'admin_categorie_ressource_update'],
+                [Admin\CategorieRessourceController::class, 'update']
+            );
+
+            $router->any(
+                ['/delete/{id:\d+}', 'admin_categorie_ressource_delete'],
+                [Admin\CategorieRessourceController::class, 'delete']
+            );
+        }
+    );
+
 };

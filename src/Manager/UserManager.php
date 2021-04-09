@@ -102,8 +102,8 @@ class UserManager
         $couples[] = 'droit=' . $this->connection->quote($user->getDroit());
 
         // Ajout du Nom / Prenom
-        $couples[] = 'nom' . $this->connection->quote($user->getNom());
-        $couples[] = 'prenom' . $this->connection->quote($user->getPrenom());
+        $couples[] = 'nom=' . $this->connection->quote($user->getNom());
+        $couples[] = 'prenom=' . $this->connection->quote($user->getPrenom());
         
         // Execute la requête de mise à jour
         $this->connection->query(

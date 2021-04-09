@@ -1,21 +1,24 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
 
-{% block title %}Suppression ressource{% endblock %}
+{% block title %}Nouvelle catégorie{% endblock %}
 
 
 {% block body %}
-<div class="container">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Supprimer la ressource ?</h1>
+        <h1 class="h2">Supprimer la catégorie</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="{{ path('liste_ressources') }}" class="btn btn-sm btn-outline-secondary">
+            <a href="{{ path('admin_categorie_ressource_create') }}"
+               class="btn btn-sm btn-outline-success">
+                Nouvelle catégorie
+            </a>
+            <a href="{{ path('admin_categorie_ressource_index') }}" class="btn btn-sm btn-outline-secondary">
                 Retour à la liste
             </a>
         </div>
     </div>
 
-    <form action="{{ path('delete_ressource', {'id': ressource.id}) }}" method="post">
+    <form action="{{ path('admin_categorie_ressource_delete', {'id': categorie.id}) }}" method="post">
         <div class="row mb-3">
             <div class="col-sm-10 offset-sm-2">
                 <div class="form-check">
@@ -28,14 +31,13 @@
         </div>
         <div class="row mb-3">
             <div class="col-sm-10 offset-sm-2">
-                <button type="submit" name="delete_ressource" class="btn btn-danger">
+                <button type="submit" name="delete_categorie" class="btn btn-danger">
                     Supprimer
                 </button>
-                <a href="{{ path('liste_ressources') }}" class="btn btn-light">
+                <a href="{{ path('admin_categorie_ressource_index') }}" class="btn btn-light">
                     Annuler
                 </a>
             </div>
         </div>
     </form>
-</div>
 {% endblock %}
