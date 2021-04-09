@@ -5,8 +5,9 @@
         <h1>Favoris</h1>
         <p>voici la liste des favoris:</p>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <div class="container my-4">
-    <div class="mt-4">
+        <link rel="stylesheet" href="css/ressourceNav.css">
+        <div class="container my-4">
+        <div class="mt-4">
         {% for ressource in favoris %}
             <!-- TEMPLATE BOOTSTRAP : https://bootsnipp.com/snippets/yNa0V -->
             <div class="card gedf-card mt-4">
@@ -24,10 +25,6 @@
                         <div>
                             <div class="dropdown">
                                 <td class="text-end min-width: 175px;">
-                                    <a href="{{ path('read_ressource', [ressource.id]) }}"
-                                        class="fa fa-eye" style="text-decoration: none; padding-right: 5px;"
-                                        title="Consulter la ressource">
-                                    </a>
                                     {% if (get_user().id == ressource.createur.id) or (get_user().droit >= 2) %}
                                     <a href="{{ path('update_ressource', [ressource.id]) }}"
                                         class="fa fa-edit" style="text-decoration: none; padding-right: 5px;"
@@ -45,11 +42,13 @@
 
                 </div>
                 <div class="card-body">
-                    <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> {{ressource.dateModification|date('d-m-Y')}} à {{ressource.dateModification|date('H:i')}}</div>
-                    <h5 class="card-title">{{ ressource.titre }}</h5>
-                    <p class="card-text">
-                        {{ ressource.contenu|length > 50 ? ressource.contenu|striptags('<b>')|slice(0, 300) ~ '...'  : ressource.contenu|striptags('<b>') }}
-                    </p>
+                    <a href="{{ path('read_ressource', [ressource.id]) }}" class="custom-card" style="text-decoration: none;">
+                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> {{ressource.dateModification|date('d-m-Y')}} à {{ressource.dateModification|date('H:i')}}</div>
+                        <h5 class="card-title">{{ ressource.titre }}</h5>
+                        <p class="card-text">
+                            {{ ressource.contenu|length > 50 ? ressource.contenu|striptags('<b>')|slice(0, 300) ~ '...'  : ressource.contenu|striptags('<b>') }}
+                        </p>
+                    </a>
                     <span class="badge" style="background-color: chocolate;">
                         <a href="{{ path('categorie_ressource', [ressource.categorie.id]) }}"
                             title="Voir toutes les ressources de cette catégorie" style="text-decoration: none; color:white;">
