@@ -21,7 +21,17 @@
     <div class="row mb-3">
         <span class="col-sm-2 col-form-label">Nom</span>
         <div class="col-sm-10">
-            <span class="form-control">{{ categorie.nom }}</span>
+            <span readonly class="form-control-plaintext">{{ categorie.nom }}</span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <span class="col-sm-2 col-form-label">Active</span>
+        <div class="col-sm-10">
+        {% if categorie.actif == true %}
+        <span readonly class="form-control-plaintext">Oui</span>
+        {% else %}
+        <span readonly class="form-control-plaintext">Non</span>
+        {% endif %}
         </div>
     </div>
 

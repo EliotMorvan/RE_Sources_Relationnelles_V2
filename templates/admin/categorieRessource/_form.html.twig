@@ -6,3 +6,15 @@
                value="{{ categorie.nom }}">
     </div>
 </div>
+<div class="row mb-3">
+    <label for="inputActif" class="col-sm-2 col-form-label">Active</label>
+    <div class="col-sm-10">
+        <div class="form-check form-switch">
+            {% set checked = '' %}
+            {% if categorie.actif == true %}
+            {% set checked = 'checked' %}
+            {% endif %}
+            <input class="form-check-input" {{checked}} name="actif" type="checkbox"/>
+        </div>
+    </div>
+</div>

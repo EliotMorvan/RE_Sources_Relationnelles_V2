@@ -25,7 +25,26 @@ class CategorieRessourceRepository
     {
         // Récupérer la liste des ressources
         $select = $this->connection->query(
-            'SELECT id, nom FROM categorie_ressource'
+            'SELECT id, nom, actif FROM categorie_ressource WHERE actif = TRUE'
+        );
+
+        // Liste des ressources à renvoyer
+        $categoriesRessources = [];
+
+        // Boucle sur les résultats de la requete
+        while (false !== $data = $select->fetch(PDO::FETCH_ASSOC)) {
+            $categoriesRessources[] = $this->buildCategorieRessource($data);
+        }
+
+        // Renvoi la liste des utilisateurs
+        return $categoriesRessources;
+    }
+
+    public function findAllAdmin(): array
+    {
+        // Récupérer la liste des ressources
+        $select = $this->connection->query(
+            'SELECT id, nom, actif FROM categorie_ressource'
         );
 
         // Liste des ressources à renvoyer
@@ -49,7 +68,7 @@ class CategorieRessourceRepository
     {
         // Récupérer la liste des ressources
         $select = $this->connection->query(
-            'SELECT id, nom FROM categorie_ressource ' .
+            'SELECT id, nom, actif FROM categorie_ressource ' .
             'WHERE id=' . $id . ' ' .
             'LIMIT 1'
         );
@@ -66,10 +85,11 @@ class CategorieRessourceRepository
 
     private function buildCategorieRessource(array $data): CategorieRessource
     {
-        $ressource = new CategorieRessource();
-        $ressource->setId($data['id']);
-        $ressource->setNom($data['nom']);
+        $categorie = new CategorieRessource();
+        $categorie->setId($data['id']);
+        $categorie->setNom($data['nom']);
+        $categorie->setActif($data['actif']);
 
-        return $ressource;
+        return $categorie;
     }
 }

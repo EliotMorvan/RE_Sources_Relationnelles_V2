@@ -38,7 +38,7 @@ class CategorieRessourceController extends AbstractController
     public function index(): Response
     {
         return $this->render('admin/categorieRessource/index.html.twig', [
-            'categories' => $this->repository->findAll(),
+            'categories' => $this->repository->findAllAdmin(),
         ]);
     }
 
@@ -72,11 +72,14 @@ class CategorieRessourceController extends AbstractController
     {
         $categorie = $this->findCategorie($id);
 
-        $errors = [];
-
         if (isset($_POST['update_categorie'])) {
-            $categorie
-                ->setNom($_POST['nom']);
+            $categorie->setNom($_POST['nom']);
+            
+            if ($_POST['actif'] == null) {
+                $categorie->setActif(FALSE);
+            } else {
+                $categorie->setActif(TRUE);
+            }
 
             $this->manager->update($categorie);
             return $this->redirectToRoute('admin_categorie_ressource_index');
@@ -84,7 +87,6 @@ class CategorieRessourceController extends AbstractController
 
         return $this->render('admin/categorieRessource/update.html.twig', [
             'categorie'   => $categorie,
-            'errors' => $errors,
         ]);
     }
 

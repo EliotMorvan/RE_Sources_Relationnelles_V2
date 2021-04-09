@@ -27,7 +27,7 @@
             {% for user in users %}
             <tr>
                 <td>
-                    <a href="{{ path('admin_user_read', [user.id]) }}">
+                    <a href="{{ path('admin_user_read', [user.id]) }}" style="text-decoration: none; color: black;">
                         {{ user.email }}
                     </a>
                 </td>

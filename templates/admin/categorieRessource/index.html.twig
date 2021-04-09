@@ -19,7 +19,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Email</th>
+                <th>Nom</th>
                 <th></th>
             </tr>
             </thead>
@@ -27,7 +27,7 @@
             {% for categorie in categories %}
             <tr>
                 <td>
-                    <a href="{{ path('admin_categorie_ressource_read', [categorie.id]) }}">
+                    <a href="{{ path('admin_categorie_ressource_read', [categorie.id]) }}" style="text-decoration: none; color: black;">
                         {{ categorie.nom }}
                     </a>
                 </td>

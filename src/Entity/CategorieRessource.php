@@ -15,6 +15,12 @@ class CategorieRessource {
      */
     private $nom;
 
+    /**
+     * Flag actif
+     * @var boolean
+     */
+    private $actif;
+
     public function getId()
     {
         return $this->id;
@@ -35,6 +41,18 @@ class CategorieRessource {
     public function setNom(string $nom)
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getActif()
+    {
+        return $this->actif;
+    }
+
+    public function setActif(bool $actif)
+    {
+        $this->actif = $actif;
 
         return $this;
     }

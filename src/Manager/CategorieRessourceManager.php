@@ -58,6 +58,13 @@ class CategorieRessourceManager
             'nom=' . $this->connection->quote($categorie->getNom()),
         ];
 
+        //Ajout champ actif
+        $actif = 'FALSE';
+        if ($categorie->getActif() != null) {
+            $actif = 'TRUE';
+        }
+        $couples[] = 'actif=' . $actif;
+
         $this->connection->query(
             'UPDATE categorie_ressource SET ' . implode(',', $couples) .
             ' WHERE id=' . $categorie->getId() . ' LIMIT 1'
