@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Profil{% endblock %}
+
+
+{% block body %}
+
+<link rel="stylesheet" href="css/profil.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/ressourceNav.css">
+
+<div class="container">
+
+    <div class="row py-5 px-4">
+        <div class="col-md-5 mx-auto" style="flex: auto;">
+            <!-- Profile widget -->
+            <div class="bg-white shadow rounded overflow-hidden">
+                <div class="px-4 pt-0 pb-4 cover">
+                    <div class="media align-items-end profile-head" style="display: grid;">
+                        <div class="media-body mb-5 text-white">
+                            <h4 class="mt-0 mb-0">{{profil.user.prenom}} {{profil.user.nom}}</h4>
+                            <p class="small mb-4"> <i class="fas fa-map-marker-alt mr-2"></i></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-light p-4 d-flex">
+                    <ul class="list-inline">
+                        <li>
+                            <h5 class="font-weight-bold">{{profil.user.email}}</h5>
+                        </li>
+                        <li>
+                            {% if (profil.user.droit) == 0 %}
+                                Citoyen
+                            {% endif %}
+                            {% if (profil.user.droit) == 1 %}
+                                Modérateur
+                            {% endif %}
+                            {% if (profil.user.droit) == 2 %}
+                                Aministrateur
+                            {% endif %}
+                            {% if (profil.user.droit) == 3 %}
+                                Super Adminstrateur
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+                {% if profil.categories|length != 0 %}
+                    <div class="px-4 py-3">
+                        <h5 class="mb-0" style="padding-bottom: 10px;">Catégories utilisées</h5>
+                        <div class="p-4 rounded shadow-sm bg-light">
+                            <ul class="list-group list-group-flush">
+                            {% for categorie in profil.categories %}
+                                <a href="{{ path('categorie_ressource', [categorie.id]) }}" style="text-decoration: none; color: black;">
+                                    <li class="list-group-item list-group-item-action">{{categorie.nom}}</li>
+                                </a>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if profil.types|length != 0 %}
+                    <div class="px-4 py-3">
+                        <h5 class="mb-0" style="padding-bottom: 10px;">Types utilisés</h5>
+                        <div class="p-4 rounded shadow-sm bg-light">
+                            <ul class="list-group list-group-flush">
+                            {% for type in profil.types %}
+                                <a href="{{ path('type_ressource', [type]) }}" style="text-decoration: none; color: black;">
+                                    <li class="list-group-item list-group-item-action">{{type|replace({'_': ' '})|capitalize}}</li>
+                                </a>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if profil.ressourcesCreateur|length != 0%}
+                    <div class="px-4 py-3">
+                        <h5 class="mb-0" style="padding-bottom: 10px;">Auteur de ces ressources</h5>
+                        <div class="p-4 rounded shadow-sm bg-light">
+                            {% for ressource in profil.ressourcesCreateur %}
+                                <div class="card gedf-card mt-4">
+                                    <div class="card-body">
+                                        <a href="{{ path('read_ressource', [ressource.id]) }}" class="custom-card" style="text-decoration: none;">
+                                            <h5 class="card-title">{{ ressource.titre }}</h5>
+                                        </a>
+                                        <span class="badge" style="background-color: chocolate;">
+                                            <a href="{{ path('categorie_ressource', [ressource.categorie.id]) }}"
+                                                title="Voir toutes les ressources de cette catégorie" style="text-decoration: none; color:white;">
+                                                {{ressource.categorie.nom}}
+                                            </a>
+                                        </span>
+                                        <span class="badge" style="background-color: CornflowerBlue;">
+                                            <a href="{{ path('type_ressource', [ressource.type]) }}"
+                                                title="Voir toutes les ressources de ce type" style="text-decoration: none; color:white;">
+                                                {{ressource.type|replace({'_': ' '})|capitalize}}
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if profil.ressourcesFavoris|length != 0%}
+                    <div class="px-4 py-3">
+                        <h5 class="mb-0" style="padding-bottom: 10px;">Favoris</h5>
+                        <div class="p-4 rounded shadow-sm bg-light">
+                            {% for ressource in profil.ressourcesFavoris %}
+                                <div class="card gedf-card mt-4">
+                                    <div class="card-body">
+                                        <a href="{{ path('read_ressource', [ressource.id]) }}" class="custom-card" style="text-decoration: none;">
+                                            <h5 class="card-title">{{ ressource.titre }}</h5>
+                                        </a>
+                                        <span class="badge" style="background-color: chocolate;">
+                                            <a href="{{ path('categorie_ressource', [ressource.categorie.id]) }}"
+                                                title="Voir toutes les ressources de cette catégorie" style="text-decoration: none; color:white;">
+                                                {{ressource.categorie.nom}}
+                                            </a>
+                                        </span>
+                                        <span class="badge" style="background-color: CornflowerBlue;">
+                                            <a href="{{ path('type_ressource', [ressource.type]) }}"
+                                                title="Voir toutes les ressources de ce type" style="text-decoration: none; color:white;">
+                                                {{ressource.type|replace({'_': ' '})|capitalize}}
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

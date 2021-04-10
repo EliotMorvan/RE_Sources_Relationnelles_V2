@@ -5,7 +5,7 @@ use Controller\Api;
 use Controller\AppController;
 use Controller\CategorieRessourceController;
 use Controller\FavorisController;
-use Controller\TestController;
+use Controller\ProfilController;
 use Controller\RessourceController;
 use Http\RedirectResponse;
 use Phroute\Phroute\RouteCollector;
@@ -117,15 +117,26 @@ return function (RouteCollector $router, ContainerInterface $container) {
         ['ressources/read/{id}', 'read_ressource'],
         [RessourceController::class, 'read']
     );
-// ---------- Gestion des favoris ----------
-$router->get(
-    ['/favoris', 'liste_favoris'],
-    [FavorisController::class, 'index']
-);
+
+    // ---------- Gestion des favoris ----------
+    $router->get(
+        ['/favoris', 'liste_favoris'],
+        [FavorisController::class, 'index'],
+        ['before' => 'citoyen']
+    );
 
     $router->any(
         ['ressources/commentaires/delete/{id}', 'delete_commentaire'],
-        [RessourceController::class, 'deleteCommentaire']
+        [RessourceController::class, 'deleteCommentaire'],
+        ['before' => 'citoyen']
+    );
+
+    // Profil
+
+    $router->get(
+        ['/profil', 'profil'],
+        [ProfilController::class, 'index'],
+        ['before' => 'citoyen']
     );
 
     // --------- Catégories de ressource ---------

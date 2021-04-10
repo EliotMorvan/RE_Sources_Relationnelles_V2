@@ -2,6 +2,7 @@
 
 namespace Repository;
 
+use ArrayAccess;
 use DateTime;
 use Entity\CategorieRessource;
 use Entity\Commentaire;
@@ -148,6 +149,23 @@ class RessourceRepository
 
         // Renvoi la liste des ressources
         return $this->buildRessource($data);
+    }
+
+    public function findAllForCreateur(int $idCreateur): ?Array
+    {
+        // Récupérer la liste des ressources
+        $select = $this->connection->query(
+            'SELECT id, titre, contenu, id_createur, id_categorie, id_type, date_modification FROM ressource ' .
+            'WHERE id_createur=' . $idCreateur . ';'
+        );
+
+        $ressources = [];
+
+        while (false !== $data = $select->fetch(PDO::FETCH_ASSOC)) {
+            $ressources[] = $this->buildRessource($data);
+        }
+
+        return $ressources;
     }
 
     public function findOneCommentaireById(int $id): ?Commentaire

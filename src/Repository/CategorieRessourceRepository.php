@@ -83,6 +83,25 @@ class CategorieRessourceRepository
         return $this->buildCategorieRessource($data);
     }
 
+    public function getCategoriesUsedForCreateur(int $idCreateur): ?Array
+    {
+        $select = $this->connection->query(
+            'SELECT categorie_ressource.id, categorie_ressource.nom, categorie_ressource.actif FROM `categorie_ressource` JOIN ressource on categorie_ressource.id = ressource.id_categorie JOIN user on ressource.id_createur = user.id ' .
+            'WHERE user.id = ' . $idCreateur . ';'
+        ); 
+
+        // Liste des ressources à renvoyer
+        $categoriesRessources = [];
+
+        // Boucle sur les résultats de la requete
+        while (false !== $data = $select->fetch(PDO::FETCH_ASSOC)) {
+            $categoriesRessources[] = $this->buildCategorieRessource($data);
+        }
+
+        // Renvoi la liste des utilisateurs
+        return $categoriesRessources;
+    }
+
     private function buildCategorieRessource(array $data): CategorieRessource
     {
         $categorie = new CategorieRessource();

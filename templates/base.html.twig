@@ -10,6 +10,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
               integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
               rel="stylesheet"  crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/ressourceNav.css">
     {% endblock %}
 </head>
 <body>
@@ -21,11 +22,13 @@
                 {% if get_user() %}
                     <div class="card" >
                         <div class="card-body">
-                            <div class="h5">{{ get_user().prenom }} {{ get_user().nom }}</div>
-                            <div class="h7 text-muted">{{ get_user().email }}</div>
-                             <!--<div class="h7">Developer of web applications, JavaScript, PHP, Java, Python, Ruby, Java, Node.js,
-                                etc.
-                            </div> -->
+                            <a href="{{ path('profil') }}" class="custom-card" style="text-decoration: none;">
+                                <div class="h5">{{ get_user().prenom }} {{ get_user().nom }}</div>
+                                <div class="h7 text-muted">{{ get_user().email }}</div>
+                                <!--<div class="h7">Developer of web applications, JavaScript, PHP, Java, Python, Ruby, Java, Node.js,
+                                    etc.
+                                </div> -->
+                            </a>
                         </div>
                         <!-- <ul class="list-group list-group-flush">
                             <li class="list-group-item">
