@@ -44,9 +44,16 @@ class CategorieRessourceController extends AbstractController
     {
         $categorie = $this->repository->findOneById($id);
         $ressources = $this->ressourceRepository->findAllForCategory($id);
+
+        $reg = '';
+        if (isset($_REQUEST['reg'])){
+            $reg = $_REQUEST['reg'];
+        }
+
         $content = $this->twig->render('categorieRessource/index.html.twig', [
             'categorie'  => $categorie,
             'ressources' => $ressources,
+            'reg' => $reg,
         ]);
 
         return new Response($content);
@@ -56,9 +63,16 @@ class CategorieRessourceController extends AbstractController
     {
         $typeId = array_search($nom, TypeRessource::types)+1;
         $ressources = $this->ressourceRepository->findAllFortype($typeId);
+
+        $reg = '';
+        if (isset($_REQUEST['reg'])){
+            $reg = $_REQUEST['reg'];
+        }
+
         $content = $this->twig->render('typeRessource/index.html.twig', [
             'type'  => $nom,
             'ressources' => $ressources,
+            'reg' => $reg,
         ]);
 
         return new Response($content);

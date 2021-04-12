@@ -56,9 +56,15 @@ class FavorisController extends AbstractController
         // reup des favoris de ce mec là
         $favoris = $this->repository->findAll();
 
+        $reg = '';
+        if (isset($_REQUEST['reg'])){
+            $reg = $_REQUEST['reg'];
+        }
+
         // envoie de ces favoris à la page twig
         $content = $this->twig->render('favoris/index.html.twig', [
             'favoris' => $favoris,
+            'reg' => $reg,
         ]);
 
         return new Response($content);
@@ -70,7 +76,7 @@ class FavorisController extends AbstractController
         $ressource = $this->ressourceRepository->findOneById($idRessource);
 
         $favoris->setCreateur($this->security->getUser());
-        $favoris->setRessouce($ressource);
+        $favoris->setRessource($ressource);
 
         $this->manager->create($favoris);
 
@@ -85,7 +91,7 @@ class FavorisController extends AbstractController
         $ressource = $this->ressourceRepository->findOneById($idRessource);
 
         $favoris->setCreateur($this->security->getUser());
-        $favoris->setRessouce($ressource);
+        $favoris->setRessource($ressource);
 
         $this->manager->delete($favoris);
 

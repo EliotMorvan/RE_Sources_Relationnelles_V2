@@ -70,6 +70,11 @@ class Security
         return $this->user;
     }
 
+    public function isTaken(string $pseudo, array $pseudos): bool
+    {
+        return true;
+    }
+
     /**
      * Renvoi l'utilisateur connecté, ou la valeur nulle.
      *

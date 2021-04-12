@@ -59,23 +59,20 @@ class RessourceController extends AbstractController
         $this->security = $security;
     }
 
+
     public function index(): Response
     {
         $ressources = $this->repository->findAll();
+        $reg = '';
+        if (isset($_REQUEST['reg'])){
+            $reg = $_REQUEST['reg'];
+        }
+
         $content = $this->twig->render('ressource/index.html.twig', [
             'ressources' => $ressources,
+            'reg' => $reg,
         ]);
 
-        return new Response($content);
-    }
-
-    public function indexReg(string $reg): Response
-    {
-        $ressources = $this->repository->findAllForReg($reg);
-        $content = $this->twig->render('ressource/index.html.twig', [
-            'reg'        => $reg,
-            'ressources' => $ressources,
-        ]);
         return new Response($content);
     }
 
@@ -165,19 +162,11 @@ class RessourceController extends AbstractController
     public function deleteCommentaire(int $id): Response
     {
         $commentaire = $this->findCommentaire($id);
+        $ressource = $commentaire->getRessource();
 
-        if (isset($_POST['delete_commentaire'])) {
-            // Si l'internaute a confirmé
-            if ($_POST['confirm'] === '1') {
-                $this->manager->deleteCommentaire($commentaire->getId());
+        $this->manager->deleteCommentaire($commentaire->getId());
 
-                return $this->redirectToRoute('liste_ressources');
-            }
-        }
-
-        return $this->render('ressource/commentaires/delete.html.twig', [
-            'commentaire' => $commentaire,
-        ]);
+        return $this->redirectToRoute('liste_ressources');
     }
 
     public function read(int $id): Response {

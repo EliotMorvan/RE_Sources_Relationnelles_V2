@@ -34,7 +34,7 @@ class FavorisManager
     // Execute la requete de création
     $insert->execute([
       'idCreateur'       =>$favoris->getCreateur()->getId(),
-      'idRessource'      =>$favoris->getRessouce()->getId(),
+      'idRessource'      =>$favoris->getRessource()->getId(),
     ]);
 
     // Mettre à jour l'identifiant du favoris
@@ -51,7 +51,7 @@ class FavorisManager
     // Execute la requete de création
     $delete->execute([
       'idCreateur'       =>$favoris->getCreateur()->getId(),
-      'idRessource'      =>$favoris->getRessouce()->getId(),
+      'idRessource'      =>$favoris->getRessource()->getId(),
     ]);
   }
 }

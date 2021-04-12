@@ -24,7 +24,7 @@ class favoris {
          * @var Ressource
          */
 
-        private $ressouce;
+        private $ressource;
 
 
 
@@ -77,21 +77,21 @@ class favoris {
         }
 
         /**
-         * Get the value of ressouce
+         * Get the value of ressource
          */ 
-        public function getRessouce()
+        public function getRessource()
         {
-                return $this->ressouce;
+                return $this->ressource;
         }
 
         /**
-         * Set the value of ressouce
+         * Set the value of ressource
          *
          * @return  self
          */ 
-        public function setRessouce($ressouce)
+        public function setRessource($ressource)
         {
-                $this->ressouce = $ressouce;
+                $this->ressource = $ressource;
 
                 return $this;
         }

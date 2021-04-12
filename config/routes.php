@@ -94,7 +94,7 @@ return function (RouteCollector $router, ContainerInterface $container) {
     );
 
     $router->get(
-        ['/ressources/{reg}', 'liste_ressources_reg'],
+        ['/ressources/recherche', 'liste_ressources_reg'],
         [RessourceController::class, 'indexReg']
     );
 
@@ -207,6 +207,11 @@ return function (RouteCollector $router, ContainerInterface $container) {
     $router->any(
         ['/admin/login', 'admin_login'],
         [Admin\SecurityController::class, 'login']
+    );
+    
+    $router->any(
+        ['/admin/create', 'create_compte'],
+        [Admin\SecurityController::class, 'create']
     );
 
     // Déconnexion

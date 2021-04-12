@@ -43,7 +43,7 @@ class Commentaire {
 
         public function getRessource()
         {
-                return $this->ressouce;
+                return $this->ressource;
         }
 
         public function setRessource(Ressource $ressource)

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Nouvel utilisateur</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+          rel="stylesheet" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/signin.css" rel="stylesheet">
+</head>
+<body class="text-center">
+
+    <div class="container">
+        <main class="form-signin">
+            <form action="{{ path('admin_create_compte') }}" method="post">
+                <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+                <div class="row mb-3">
+                    <label for="inputTitre" class="col-sm-2 col-form-label">Prénom</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" 
+                                type="text" name="prenom" id="inputPrenom">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputTitre" class="col-sm-2 col-form-label">Nom</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" 
+                                type="text" name="nom" id="inputNom">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputTitre" class="col-sm-2 col-form-label">Pseudo</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" 
+                                type="text" name="pseudo" id="inputPseudo">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputTitre" class="col-sm-2 col-form-label">Mot de passe</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" 
+                                type="password" name="password" id="inputPassword">
+                    </div>
+                </div>
+            </form>
+        </main>
+
+        <div class="row mb-3">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" name="create_compte" class="btn btn-success">
+                    Enregistrer
+                </button>
+                <a href="{{ path('admin_login') }}" class="btn btn-light">
+                    Annuler
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
