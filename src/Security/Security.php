@@ -184,6 +184,17 @@ class Security
         return true;
     }
 
+    public function pseudoDisponible(string $pseudo): bool 
+    {
+        $user = $this->repository->findOneByEmail($pseudo);
+
+        if (null == $user) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Déconnecte l'utilisateur.
      */

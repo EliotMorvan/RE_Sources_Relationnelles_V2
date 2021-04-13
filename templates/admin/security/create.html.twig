@@ -17,7 +17,7 @@
 
     <div class="container">
         <main class="form-signin">
-            <form action="{{ path('admin_create_compte') }}" method="post">
+            <form action="{{ path('create_compte') }}" method="post">
                 <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
                 <div class="row mb-3">
                     <label for="inputTitre" class="col-sm-2 col-form-label">Prénom</label>
@@ -47,19 +47,19 @@
                                 type="password" name="password" id="inputPassword">
                     </div>
                 </div>
-            </form>
-        </main>
+            </main>
 
-        <div class="row mb-3">
-            <div class="col-sm-10 offset-sm-2">
-                <button type="submit" name="create_compte" class="btn btn-success">
-                    Enregistrer
-                </button>
-                <a href="{{ path('admin_login') }}" class="btn btn-light">
-                    Annuler
-                </a>
+            <div class="row mb-3">
+                <div class="col-sm-10 offset-sm-2">
+                    <button type="submit" name="create_compte" class="btn btn-success">
+                        Enregistrer
+                    </button>
+                    <a href="{{ path('admin_login') }}" class="btn btn-light">
+                        Annuler
+                    </a>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </body>
 </html>

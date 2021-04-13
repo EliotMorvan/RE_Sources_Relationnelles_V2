@@ -3,7 +3,9 @@
 namespace Controller\Admin;
 
 use Controller\AbstractController;
+use Entity\User;
 use Http\Response;
+use Manager\UserManager;
 use Security\Security;
 
 class SecurityController extends AbstractController
@@ -12,10 +14,12 @@ class SecurityController extends AbstractController
      * @var Security
      */
     private $security;
+    private $userManager;
 
-    public function __construct(Security $security)
+    public function __construct(Security $security, UserManager $userManager)
     {
         $this->security = $security;
+        $this->userManager = $userManager;
     }
 
     public function login(): Response
@@ -41,14 +45,32 @@ class SecurityController extends AbstractController
     public function create(): Response
     {
         $error = null;
-        if (isset($_POST['create'])) {
-            if (empty($email = $_POST['email'])) {
-                $error = "Veuillez saisir un pseudo.";
-            } elseif (empty($password = $_POST['password'])) {
-                $error = "Veuillez saisir un mot de passe.";
-            } elseif ($this->security->isTaken($email, $password)) {
+        if (isset($_POST['create_compte'])) {
+            if (empty($prenom = $_POST['prenom'])) {
+                $error = "Veuillez saisir votre prénom.";
+            } 
+            elseif (empty($nom = $_POST['nom'])) {
+                $error = "Veuillez saisir votre nom.";
+            }
+            elseif (empty($pseudo = $_POST['pseudo'])) {
+                $error = "Veuillez saisir votre pseudo.";
+            }
+            elseif (empty($password = $_POST['password'])) {
+                $error = "Veuillez saisir votre mot de passe.";
+            } 
+            elseif ($this->security->pseudoDisponible($pseudo)) {
+                $user = new User();
+                $user->setEmail($pseudo);
+                $user->setPrenom($prenom);
+                $user->setNom($nom);
+                $user->setPlainPassword($password);
+                $user->setDroit(0);
+                $this->userManager->insert($user);
+                $this->security->login($pseudo, $password);
                 return $this->redirectToRoute('/');
-            } else {
+            } 
+            else {
+                $error = "Ce pseudo est déja utilisé.";
                 $error = $this->security->getError();
             }
         }
