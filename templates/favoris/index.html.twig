@@ -68,6 +68,7 @@
                                 </a>
                             </span>
                         </div>
+                        {% if get_user() %}
                         <div class="card-footer">
                             {% if get_user().id in ressource.userFavoris %}
                                 <a href="{{ path('delete_favoris', [ressource.id]) }}" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-star"></i> Retirer des favoris</a>
@@ -77,6 +78,7 @@
                             <!-- <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-comment"></i> Comment</a>
                             <a href="#" class="card-link" style="text-decoration: none; color: black;"><i class="fa fa-mail-forward"></i> Share</a> -->
                         </div>
+                        {% endif %}
                     </div>
                 {% endif %}
             {% else %}
