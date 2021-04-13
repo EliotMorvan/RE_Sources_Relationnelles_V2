@@ -25,23 +25,43 @@
             </thead>
             <tbody>
             {% for user in users %}
-            <tr>
-                <td>
-                    <a href="{{ path('admin_user_read', [user.id]) }}" style="text-decoration: none; color: black;">
-                        {{ user.email }}
-                    </a>
-                </td>
-                <td class="text-end">
-                    <a href="{{ path('admin_user_update', [user.id]) }}"
-                       class="btn btn-xs btn-warning">
-                        Modifier
-                    </a>
-                    <a href="{{ path('admin_user_delete', [user.id]) }}"
-                       class="btn btn-xs btn-danger">
-                        Supprimer
-                    </a>
-                </td>
-            </tr>
+            {% if get_user().droit == 3 %}
+                <tr>
+                    <td>
+                        <a href="{{ path('admin_user_read', [user.id]) }}" style="text-decoration: none; color: black;">
+                            {{ user.email }}
+                        </a>
+                    </td>
+                    <td class="text-end">
+                        <a href="{{ path('admin_user_update', [user.id]) }}"
+                        class="btn btn-xs btn-warning">
+                            Modifier
+                        </a>
+                        <a href="{{ path('admin_user_delete', [user.id]) }}"
+                        class="btn btn-xs btn-danger">
+                            Supprimer
+                        </a>
+                    </td>
+                </tr>
+            {% elseif user.droit <= 1 %}
+                <tr>
+                    <td>
+                        <a href="{{ path('admin_user_read', [user.id]) }}" style="text-decoration: none; color: black;">
+                            {{ user.email }}
+                        </a>
+                    </td>
+                    <td class="text-end">
+                        <a href="{{ path('admin_user_update', [user.id]) }}"
+                        class="btn btn-xs btn-warning">
+                            Modifier
+                        </a>
+                        <a href="{{ path('admin_user_delete', [user.id]) }}"
+                        class="btn btn-xs btn-danger">
+                            Supprimer
+                        </a>
+                    </td>
+                </tr>
+            {% endif %}
             {% endfor %}
             </tbody>
         </table>

@@ -12,12 +12,14 @@
         <div class="text-muted" style="margin-left:auto;"> <i class="fa fa-clock-o"></i> 
           {{commentaire.dateModification|date('d-m-Y')}} à {{commentaire.dateModification|date('H:i')}}
         </div>
+        {% if get_user().droit >= 1 or get_user().id == commentaire.createur.id %}
         <div class="dropdown" style="padding-left: 10px;">
           <a href="{{ path('delete_commentaire', [commentaire.id]) }}"
             class="fa fa-trash" style="text-decoration: none; color: crimson; padding-right: 5px;"
             title="Supprimer le commentaire">
           </a>
         </div>
+        {% endif %}
     </div>
     <div class="toast-body">
       {{commentaire.contenu}}
