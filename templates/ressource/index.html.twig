@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/ressourceNav.css">
     <div class="container my-4">
+    {% if get_user().droit is not null %}
+        <a href="{{ path('create_ressource')}}" class="btn btn-success mt-4">Créer une ressource</a>
+    {% endif %}
     <div class="mt-4">
         <form name="form" action="{{ path('liste_ressources') }}" method="get">
             <div class="inner-form">
@@ -147,7 +150,4 @@
         {% endfor %}
     </div>
 
-    {% if get_user().droit is not null %}
-        <a href="{{ path('create_ressource')}}" class="btn btn-success mt-4">Créer une ressource</a>
-    {% endif %}
 {% endblock %}

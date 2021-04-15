@@ -25,8 +25,6 @@ class UserValidator
 
         if (empty($user->getEmail())) {
             $errors['email'] = "Veuillez saisir une adresse email.";
-        } elseif (!filter_var($user->getEmail(), FILTER_VALIDATE_EMAIL)) {
-            $errors['email'] = "Cette adresse email n'est pas valide.";
         }
 
         if (empty($user->getPrenom())) {
